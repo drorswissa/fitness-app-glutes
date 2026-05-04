@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glutes Workout App</title>
+  <style>
+    :root {
+      --bg: #0b1017;
+      --panel: #111827;
+      --panel-2: #162033;
+      --panel-3: #0c1320;
+      --text: #f5f7fb;
+      --muted: #9eabc3;
+      --line: rgba(255,255,255,0.08);
+      --accent: #2bd3a0;
+      --accent-2: #1eb885;
+      --danger: #ff6f6f;
+      --shadow: 0 10px 28px rgba(0,0,0,.25);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #08101a 0%, #0b1017 100%);
+      color: var(--text);
+    }
+
+    .app {
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 12px 12px 110px;
+    }
+
+    .stack { display: grid; gap: 12px; }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .mini-btn {
+      min-width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      color: var(--text);
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .screen-timer {
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+      flex: 1;
+    }
+
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .day-card {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 10px;
+      text-align: center;
+      cursor: pointer;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .day-card small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 11px;
+    }
+
+    .day-card.active {
+      outline: 2px solid rgba(43,211,160,.35);
+      background: rgba(43,211,160,.10);
+    }
+
+    .progress-track {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+      align-items: center;
+    }
+
+    .progress-step {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 999px;
+      background: #000;
+      border: 1px solid var(--line);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      opacity: .9;
+      cursor: pointer;
+    }
+
+    .progress-step.active {
+      background: var(--accent);
+      color: #052017;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 176px;
+      object-fit: contain;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 8px;
+    }
+
+    .exercise-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-top: 14px;
+      line-height: 1.2;
+    }
+
+    .exercise-sub {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+      margin-top: 6px;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    button, input, select, a.linkbtn { font: inherit; }
+
+    button, a.linkbtn {
+      border: none;
+      border-radius: 16px;
+      padding: 11px 13px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .primary {
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      color: #082217;
+      font-weight: 800;
+    }
+
+    .secondary {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .danger {
+      background: rgba(255,111,111,.13);
+      color: #ffb1b1;
+      border: 1px solid rgba(255,111,111,.25);
+    }
+
+    .full { width: 100%; }
+
+    .sets-card {
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .set-row {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 40px 1fr 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .set-row.active {
+      box-shadow: inset 0 0 0 2px rgba(43,211,160,.35);
+      background: rgba(43,211,160,.08);
+    }
+
+    .set-index {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #2a313d;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .input-wrap {
+      display: grid;
+      grid-template-columns: 54px auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .tiny-input {
+      width: 100%;
+      background: #020406;
+      border: 1px solid rgba(255,255,255,.05);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 8px;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .unit {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .icon-btn {
+      min-width: 42px;
+      height: 42px;
+      border: none;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #0a0e14;
+      color: var(--text);
+      cursor: pointer;
+      border: 1px solid var(--line);
+      font-size: 16px;
+    }
+
+    .icon-btn.done {
+      background: rgba(43,211,160,.16);
+      color: #8ff3cb;
+      border-color: rgba(43,211,160,.26);
+    }
+
+    .timer-footer {
+      position: sticky;
+      bottom: 92px;
+      background: rgba(20,26,35,.96);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 10px;
+      align-items: center;
+      box-shadow: var(--shadow);
+      margin-top: 14px;
+      z-index: 4;
+    }
+
+    .footer-block { text-align: center; }
+    .footer-label { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+    .footer-time { font-size: 20px; font-weight: 800; }
+
+    .footer-btn {
+      border: none;
+      border-radius: 16px;
+      padding: 14px 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .footer-btn.done {
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      color: #062117;
+    }
+
+    .footer-btn.rest {
+      background: #05080d;
+      color: #d7dfef;
+      border: 1px solid var(--line);
+    }
+
+    .section.hidden { display: none; }
+    .section-title { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .stat-box {
+      background: var(--panel-3);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 12px 6px;
+      text-align: center;
+    }
+
+    .stat-box span {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 20px;
+      margin-top: 4px;
+    }
+
+    .history-item {
+      background: var(--panel-3);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 11px;
+      margin-bottom: 8px;
+    }
+
+    .history-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .history-delete-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: rgba(255,111,111,.13);
+      color: #ffb1b1;
+      border: 1px solid rgba(255,111,111,.25);
+      padding: 0;
+      font-size: 17px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .empty {
+      color: var(--muted);
+      text-align: center;
+      padding: 18px 10px;
+      border: 1px dashed var(--line);
+      border-radius: 16px;
+    }
+
+    .walk-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .walk-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    .sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      display: none;
+      z-index: 19;
+    }
+
+    .sheet-backdrop.open { display: block; }
+
+    .sheet {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 82px;
+      max-width: 430px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 14px;
+      max-height: 62vh;
+      overflow: auto;
+      display: none;
+      z-index: 20;
+      box-shadow: var(--shadow);
+    }
+
+    .sheet.open { display: block; }
+
+    input, select {
+      width: 100%;
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 10px 11px;
+      outline: none;
+      margin-top: 8px;
+    }
+
+    .library-item {
+      background: var(--panel-3);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: 54px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .library-item img {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 4px;
+    }
+
+    .fixed-spotify {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      width: min(430px, 100vw);
+      background: rgba(10,14,20,.96);
+      border-top: 1px solid var(--line);
+      padding: 8px 10px 10px;
+      z-index: 30;
+      backdrop-filter: blur(10px);
+    }
+
+    .spotify-mini-label {
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+
+    iframe.spotify-bar {
+      width: 100%;
+      height: 80px;
+      border: none;
+      border-radius: 16px;
+    }
+
+
+    /* ===== Premium UX Upgrade V4 - visual only, keeps existing structure ===== */
+    button, .icon-btn, .day-card, .progress-step, .history-delete-btn, a.linkbtn {
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease, opacity .18s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:active, .icon-btn:active, .day-card:active, .progress-step:active, a.linkbtn:active {
+      transform: scale(.96);
+    }
+
+    .card {
+      box-shadow:
+        0 14px 34px rgba(0,0,0,.32),
+        0 2px 10px rgba(43,211,160,.045);
+    }
+
+    .mini-btn:hover, .secondary:hover, .day-card:hover, .icon-btn:hover, a.linkbtn:hover {
+      border-color: rgba(43,211,160,.28);
+      box-shadow: 0 0 0 1px rgba(43,211,160,.06), 0 10px 22px rgba(0,0,0,.18);
+    }
+
+    .progress-track {
+      grid-template-columns: repeat(auto-fit, minmax(34px, 1fr));
+      margin-bottom: 10px;
+    }
+
+    .progress-step.done-step {
+      background: rgba(43,211,160,.22);
+      color: #baf8dd;
+      border-color: rgba(43,211,160,.28);
+    }
+
+    .progress-bar {
+      height: 7px;
+      background: rgba(255,255,255,.08);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 0 2px 14px;
+      border: 1px solid rgba(255,255,255,.045);
+    }
+
+    #progressFill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), #71f0c3, var(--accent-2));
+      box-shadow: 0 0 18px rgba(43,211,160,.28);
+      transition: width .45s ease;
+    }
+
+    .hero-image {
+      transition: transform .28s ease, filter .28s ease, box-shadow .28s ease;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+
+    .hero-image:hover {
+      transform: translateY(-1px) scale(1.005);
+    }
+
+    .exercise-title, .exercise-sub, .sets-card {
+      animation: softEnter .26s ease;
+    }
+
+    @keyframes softEnter {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .next-exercise-preview {
+      margin-top: 10px;
+      border-radius: 18px;
+      border: 1px solid rgba(43,211,160,.16);
+      background: linear-gradient(180deg, rgba(43,211,160,.09), rgba(255,255,255,.025));
+      padding: 10px 12px;
+      display: grid;
+      gap: 4px;
+    }
+
+    .next-exercise-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .next-exercise-name {
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .set-row {
+      transition: transform .18s ease, background .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+
+    .set-row:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.12);
+    }
+
+    .set-row.set-done-flash {
+      animation: doneFlash .48s ease;
+    }
+
+    @keyframes doneFlash {
+      0% { background: rgba(43,211,160,.34); box-shadow: 0 0 0 2px rgba(43,211,160,.28) inset; }
+      100% { background: rgba(43,211,160,.08); box-shadow: none; }
+    }
+
+    .timer-footer {
+      backdrop-filter: blur(16px);
+    }
+
+    .fixed-spotify {
+      backdrop-filter: blur(18px);
+      background: rgba(10,14,20,.88);
+    }
+
+    body.focus-mode .days-grid,
+    body.focus-mode .stats-grid,
+    body.focus-mode #statsSection .section-title {
+      display: none !important;
+    }
+
+    body.focus-mode .card:first-child {
+      border-color: rgba(43,211,160,.20);
+      box-shadow: 0 18px 42px rgba(0,0,0,.38), 0 0 0 1px rgba(43,211,160,.06);
+    }
+
+    @media (max-width: 390px) {
+      .progress-track { gap: 6px; }
+      .progress-step { font-size: 12px; }
+      .next-exercise-preview { padding: 9px 10px; }
+    }
+
+  
+
+/* ===== Glutes App additions - same visual language ===== */
+.days-grid { grid-template-columns: 1fr !important; }
+.progress-history-card { background: var(--panel-3); border: 1px solid var(--line); border-radius: 18px; padding: 12px; margin-bottom: 10px; }
+.progress-ex-title { font-weight: 900; margin-bottom: 8px; }
+.progress-line { display:flex; justify-content:space-between; gap:10px; color: var(--muted); font-size:12px; padding:6px 0; border-top:1px solid rgba(255,255,255,.05); }
+.progress-line:first-of-type { border-top:0; }
+.quick-start-card { display:grid; gap:8px; }
+.quick-start-title { font-size:20px; font-weight:900; text-align:center; }
+.quick-start-sub { color:var(--muted); font-size:13px; text-align:center; line-height:1.4; }
+</style>
+</head>
+<body>
+  <div class="app">
+    <div class="stack">
+      <div class="card">
+        <div class="topbar">
+          <button class="mini-btn" id="resetWorkoutBtn">↺</button>
+          <div class="screen-timer" id="workoutTimerDisplay">00:00</div>
+          <button class="mini-btn" id="finishWorkoutTopBtn">✓</button>
+        </div>
+
+        <div class="days-grid" id="dayTabs"></div>
+        <div class="progress-track" id="exerciseProgress"></div>
+        <div class="progress-bar"><div id="progressFill"></div></div>
+
+        <img id="activeExerciseImage" class="hero-image" alt="exercise" />
+        <div class="exercise-title" id="activeExerciseName"></div>
+        <div class="exercise-sub" id="activeExerciseDesc"></div>
+        <div class="next-exercise-preview" id="nextExercisePreview"></div>
+
+        <div class="action-row">
+          <a class="linkbtn secondary" id="youtubeLink" href="#" target="_blank" rel="noopener">יוטיוב</a>
+          <a class="linkbtn secondary" id="animationLink" href="#" target="_blank" rel="noopener">אנימציה</a>
+        </div>
+
+        <div class="sets-card" id="setsList"></div>
+
+        <div class="timer-footer">
+          <button class="footer-btn rest" id="toggleWorkoutBtn">התחל אימון</button>
+          <div class="footer-block">
+            <div class="footer-label">Rest</div>
+            <div class="footer-time" id="restTimerDisplay">00:00</div>
+          </div>
+          <button class="footer-btn done" id="toggleRestBtn">התחל מנוחה</button>
+        </div>
+      </div>
+
+      <div class="card section" id="statsSection">
+        <div class="section-title">סטטיסטיקה</div>
+        <div class="stats-grid">
+          <div class="stat-box"><span>אימונים</span><strong id="totalWorkouts">0</strong></div>
+          <div class="stat-box"><span>תרגילים</span><strong id="totalExercises">0</strong></div>
+          <div class="stat-box"><span>רצף</span><strong id="streak">0</strong></div>
+          <div class="stat-box"><span>קלוריות</span><strong id="totalCalories">0</strong></div>
+        </div>
+      </div>
+
+      <div class="card section hidden" id="historySection">
+        <div class="section-title">היסטוריית אימונים</div>
+        <div id="historyList"></div>
+      </div>
+
+      <div class="card section hidden" id="progressSection">
+        <div class="section-title">מעקב התקדמות משקלים</div>
+        <div id="progressHistoryList"></div>
+      </div>
+
+      <div class="card section hidden" id="musicSection">
+        <div class="section-title">הפלייליסט שלי</div>
+        <input id="spotifyInput" placeholder="הדבק קישור Spotify שלך" />
+        <button class="primary full" id="saveSpotifyBtn" style="margin-top:10px;">שמור פלייליסט</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+        <button class="secondary" id="navWorkout">אימון</button>
+        <button class="secondary" id="navHistory">היסטוריה</button>
+        <button class="secondary" id="navProgress">משקלים</button>
+        <button class="secondary" id="navMusic">מוזיקה</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="fixed-spotify">
+    <div class="spotify-mini-label">Spotify</div>
+    <iframe
+      class="spotify-bar"
+      id="spotifyBar"
+      src="https://open.spotify.com/embed/playlist/37i9dQZF1DX76Wlfdnj7AP?utm_source=generator&theme=0"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy">
+    </iframe>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'glutes_app_v1';
+    const PLAN_VERSION = 'glutes-plan-v1';
+    let workoutTimerInterval = null;
+    let restTimerInterval = null;
+
+    const LIBRARY = [
+      { id:'hip_thrust', name:'היפ טראסט', muscle:'גלוטס', equipment:'מוט / מכונה', reps:'10', kg:'0', image:'https://fitnessprogramer.com/wp-content/uploads/2021/05/Barbell-Hip-Thrust.gif', video:'https://www.youtube.com/results?search_query=barbell+hip+thrust+proper+form' },
+      { id:'good_morning', name:'גוד מורנינג', muscle:'גלוטס + המסטרינג', equipment:'מוט', reps:'10', kg:'0', image:'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Good-Morning.gif', video:'https://www.youtube.com/results?search_query=barbell+good+morning+exercise+proper+form' },
+      { id:'romanian_deadlift', name:'דדליפט רומני', muscle:'גלוטס + המסטרינג', equipment:'מוט / משקולות', reps:'10', kg:'0', image:'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Romanian-Deadlift.gif', video:'https://www.youtube.com/results?search_query=romanian+deadlift+proper+form' },
+      { id:'cable_kickback', name:'קיקבאקס', muscle:'גלוטס', equipment:'כבלים', reps:'12', kg:'0', image:'https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Glute-Kickback.gif', video:'https://www.youtube.com/results?search_query=cable+glute+kickback+proper+form' }
+    ];
+
+    function uid(){ return 'id-' + Math.random().toString(36).slice(2,10); }
+
+    function makeSet(ex, i){
+      return { id: uid(), index: i + 1, reps: ex.reps || '10', kg: ex.kg || '0', done: false };
+    }
+
+    function cloneExercise(id){
+      const ex = LIBRARY.find(x => x.id === id);
+      return {
+        instanceId: uid(), libraryId: ex.id, type:'strength', name: ex.name,
+        muscle: ex.muscle, equipment: ex.equipment, image: ex.image, video: ex.video,
+        restSeconds: 90, done: false,
+        sets: [makeSet(ex,0), makeSet(ex,1), makeSet(ex,2)]
+      };
+    }
+
+    function createWorkoutPlan(){
+      return {
+        days: [{ id: 'glutes-day', name: 'אימון גלוטס', label: '4 תרגילים · 3 סטים לכל תרגיל', exercises: [
+          cloneExercise('hip_thrust'), cloneExercise('good_morning'), cloneExercise('romanian_deadlift'), cloneExercise('cable_kickback')
+        ] }],
+        selectedDayId: 'glutes-day'
+      };
+    }
+
+    function defaultState(){
+      const plan = createWorkoutPlan();
+      return {
+        days: plan.days, selectedDayId: plan.selectedDayId, activeExerciseIndex:0,
+        history: [], weightHistory: [], spotifyUrl:'https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP',
+        filters: { search:'', muscle:'הכל', equipment:'הכל' },
+        timers: { workoutSeconds:0, workoutRunning:false, restSecondsLeft:0, restRunning:false },
+        planVersion: PLAN_VERSION
+      };
+    }
+
+    function normalizeState(result){
+      if (!result || typeof result !== 'object') return defaultState();
+      if (!Array.isArray(result.history)) result.history = [];
+      if (!Array.isArray(result.weightHistory)) result.weightHistory = [];
+      if (!result.spotifyUrl) result.spotifyUrl = 'https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP';
+      if (!result.timers) result.timers = { workoutSeconds:0, workoutRunning:false, restSecondsLeft:0, restRunning:false };
+      const plan = createWorkoutPlan();
+      result.days = plan.days;
+      result.selectedDayId = plan.selectedDayId;
+      result.activeExerciseIndex = Math.min(result.activeExerciseIndex || 0, 3);
+      result.planVersion = PLAN_VERSION;
+      return result;
+    }
+
+    function load(){
+      try { return normalizeState(JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null')); }
+      catch { return defaultState(); }
+    }
+
+    let state = load();
+    function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    function selectedDay(){ return state.days[0]; }
+    function activeExercise(){ return selectedDay().exercises[state.activeExerciseIndex] || selectedDay().exercises[0]; }
+    function formatTime(s){ const m=String(Math.floor((s||0)/60)).padStart(2,'0'); const ss=String((s||0)%60).padStart(2,'0'); return `${m}:${ss}`; }
+    function todayText(){ return new Date().toLocaleDateString('he-IL'); }
+
+    function render(){
+      renderDays(); renderExerciseProgress(); renderActiveExercise(); renderNextExercise(); updateProgressBar();
+      renderStats(); renderHistory(); renderProgressHistory(); renderMusic(); renderTimers(); save();
+    }
+
+    function renderDays(){
+      document.getElementById('dayTabs').innerHTML = `
+        <button class="day-card active" onclick="resetWorkout()">
+          אימון גלוטס
+          <small>לחיצה מאפסת ופותחת את ארבעת התרגילים</small>
+        </button>`;
+    }
+
+    function renderExerciseProgress(){
+      const items = selectedDay().exercises;
+      document.getElementById('exerciseProgress').innerHTML = items.map((ex,i)=>`
+        <div class="progress-step ${i===state.activeExerciseIndex?'active':''} ${ex.done?'done-step':''}" onclick="setActiveExercise(${i})">${i+1}</div>
+      `).join('');
+    }
+
+    function updateProgressBar(){
+      const fill = document.getElementById('progressFill');
+      if (!fill) return;
+      const total = selectedDay().exercises.length || 1;
+      const completed = selectedDay().exercises.filter(ex => ex.done).length;
+      const percent = Math.round((completed / total) * 100);
+      fill.style.width = percent + '%';
+    }
+
+    function renderNextExercise(){
+      const el = document.getElementById('nextExercisePreview');
+      const next = selectedDay().exercises[state.activeExerciseIndex + 1];
+      el.innerHTML = next ? `
+        <div class="next-exercise-label">התרגיל הבא</div>
+        <div class="next-exercise-name">${escapeHtml(next.name)} · ${escapeHtml(next.muscle)}</div>` : `
+        <div class="next-exercise-label">סיום קרוב</div>
+        <div class="next-exercise-name">זה התרגיל האחרון באימון</div>`;
+    }
+
+    function renderActiveExercise(){
+      const ex = activeExercise(); const img = document.getElementById('activeExerciseImage');
+      img.onerror = () => { img.onerror=null; img.src='https://via.placeholder.com/600x300?text=Exercise'; };
+      img.src = ex.image;
+      document.getElementById('activeExerciseName').textContent = ex.name;
+      document.getElementById('activeExerciseDesc').textContent = `${ex.muscle} • ${ex.equipment} • 3 סטים`;
+      document.getElementById('youtubeLink').href = ex.video || '#';
+      document.getElementById('animationLink').href = `https://www.youtube.com/results?search_query=${encodeURIComponent(ex.name + ' exercise animation')}`;
+      document.getElementById('setsList').innerHTML = ex.sets.map((set,idx)=>`
+        <div class="set-row ${!set.done && idx===ex.sets.findIndex(s=>!s.done)?'active':''}">
+          <div class="set-index">${set.index}</div>
+          <div class="input-wrap">
+            <input class="tiny-input" value="${escapeHtml(set.reps)}" onchange="updateSetField('${ex.instanceId}','${set.id}','reps',this.value)" />
+            <span class="unit">Reps</span>
+          </div>
+          <div class="input-wrap">
+            <input class="tiny-input" value="${escapeHtml(set.kg)}" onchange="updateSetField('${ex.instanceId}','${set.id}','kg',this.value)" />
+            <span class="unit">Kg</span>
+          </div>
+          <button class="icon-btn ${set.done?'done':''}" onclick="toggleSetDone('${ex.instanceId}','${set.id}')">${set.done?'✓':'○'}</button>
+        </div>`).join('');
+    }
+
+    function renderTimers(){
+      document.getElementById('workoutTimerDisplay').textContent = formatTime(state.timers.workoutSeconds);
+      document.getElementById('restTimerDisplay').textContent = formatTime(state.timers.restSecondsLeft);
+      document.getElementById('toggleWorkoutBtn').textContent = state.timers.workoutRunning ? 'עצור אימון' : 'התחל אימון';
+      document.getElementById('toggleRestBtn').textContent = state.timers.restRunning ? 'עצור מנוחה' : 'התחל מנוחה';
+    }
+
+    function estimateStrengthCalories(){
+      const minutes = Math.max(1, Math.round((state.timers.workoutSeconds || 0) / 60));
+      const completedSets = selectedDay().exercises.reduce((sum, ex) => sum + ex.sets.filter(s => s.done).length, 0);
+      return Math.round((minutes * 4.5) + (completedSets * 3));
+    }
+
+    function renderStats(){
+      document.getElementById('totalWorkouts').textContent = state.history.length;
+      document.getElementById('totalExercises').textContent = state.history.reduce((s,h)=>s+(h.completedExercises||0),0);
+      document.getElementById('streak').textContent = [...new Set(state.history.map(h=>h.date))].length;
+      document.getElementById('totalCalories').textContent = state.history.reduce((s,h)=>s+(h.calories||0),0);
+    }
+
+    function getItemTimeValue(dateText){
+      if (!dateText) return 0;
+      const parts = String(dateText).split('.').map(Number);
+      if (parts.length === 3) { const [day,month,year]=parts; return new Date(year,month-1,day).getTime(); }
+      const fallback = new Date(dateText).getTime(); return Number.isNaN(fallback) ? 0 : fallback;
+    }
+
+    function renderHistory(){
+      const el = document.getElementById('historyList');
+      const items = [...state.history].sort((a,b)=>getItemTimeValue(b.date)-getItemTimeValue(a.date));
+      if (!items.length) { el.innerHTML='<div class="empty">עדיין אין היסטוריה</div>'; return; }
+      el.innerHTML = items.map(h=>`
+        <div class="history-item"><div class="history-row"><div>
+          <strong>${escapeHtml(h.day)}</strong>
+          <div style="margin-top:6px;color:var(--muted);font-size:12px;">${escapeHtml(h.date)} • ${h.completedExercises||0} תרגילים • זמן ${formatTime(h.duration||0)} • ${h.calories||0} קל׳</div>
+        </div><button class="history-delete-btn" onclick="deleteHistoryItem('${h.id}')" title="מחיקת אימון">🗑</button></div></div>`).join('');
+    }
+
+    function renderProgressHistory(){
+      const el = document.getElementById('progressHistoryList');
+      if (!state.weightHistory.length) { el.innerHTML='<div class="empty">אחרי שתסיים אימון, יופיע כאן מעקב משקלים לפי תרגיל</div>'; return; }
+      el.innerHTML = LIBRARY.map(ex=>{
+        const rows = state.weightHistory.filter(w=>w.libraryId===ex.id).slice(-6).reverse();
+        if (!rows.length) return '';
+        const best = Math.max(...rows.map(r=>Number(r.maxKg)||0));
+        return `<div class="progress-history-card">
+          <div class="progress-ex-title">${escapeHtml(ex.name)} · שיא: ${best} ק״ג</div>
+          ${rows.map(r=>`<div class="progress-line"><span>${escapeHtml(r.date)}</span><span>מקס׳ ${r.maxKg} ק״ג · ממוצע ${r.avgKg} ק״ג</span></div>`).join('')}
+        </div>`;
+      }).join('') || '<div class="empty">אין עדיין נתוני משקל</div>';
+    }
+
+    function deleteHistoryItem(id){
+      if (!confirm('למחוק את האימון מההיסטוריה?')) return;
+      state.history = state.history.filter(h=>h.id!==id);
+      state.weightHistory = state.weightHistory.filter(w=>w.sessionId!==id);
+      save(); render();
+    }
+
+    function updateSetField(exerciseId,setId,field,value){
+      const ex = selectedDay().exercises.find(e=>e.instanceId===exerciseId);
+      const set = ex?.sets.find(s=>s.id===setId); if (!set) return;
+      set[field] = value; save();
+    }
+
+    function toggleSetDone(exerciseId,setId){
+      const ex = selectedDay().exercises.find(e=>e.instanceId===exerciseId);
+      const set = ex?.sets.find(s=>s.id===setId); if (!set) return;
+      set.done = !set.done; ex.done = ex.sets.every(s=>s.done);
+      if (set.done) startRestTimer(true);
+      if (ex.done && state.activeExerciseIndex < selectedDay().exercises.length - 1) state.activeExerciseIndex += 1;
+      render();
+    }
+
+    function setActiveExercise(i){ state.activeExerciseIndex = i; render(); }
+
+    function resetWorkout(){
+      if (!confirm('לאפס ולפתוח אימון גלוטס חדש?')) return;
+      const plan = createWorkoutPlan();
+      state.days = plan.days; state.selectedDayId = plan.selectedDayId; state.activeExerciseIndex = 0;
+      state.timers.workoutSeconds = 0; state.timers.restSecondsLeft = 0; state.timers.workoutRunning=false; state.timers.restRunning=false;
+      clearInterval(workoutTimerInterval); clearInterval(restTimerInterval); document.body.classList.remove('focus-mode');
+      render();
+    }
+
+    function toggleWorkoutTimer(){
+      if (state.timers.workoutRunning) { clearInterval(workoutTimerInterval); workoutTimerInterval=null; state.timers.workoutRunning=false; document.body.classList.remove('focus-mode'); }
+      else { state.timers.workoutRunning=true; document.body.classList.add('focus-mode'); workoutTimerInterval=setInterval(()=>{state.timers.workoutSeconds+=1; renderTimers(); save();},1000); }
+      renderTimers(); save();
+    }
+
+    function startRestTimer(forceRestart=false){
+      if (forceRestart && restTimerInterval) { clearInterval(restTimerInterval); restTimerInterval=null; }
+      if (state.timers.restRunning && !forceRestart) return;
+      if (forceRestart) state.timers.restSecondsLeft=0;
+      state.timers.restRunning=true;
+      restTimerInterval=setInterval(()=>{state.timers.restSecondsLeft+=1; renderTimers(); save();},1000);
+      renderTimers(); save();
+    }
+
+    function toggleRestTimer(forceStop=false){
+      if (state.timers.restRunning || forceStop) { clearInterval(restTimerInterval); restTimerInterval=null; state.timers.restRunning=false; }
+      else { startRestTimer(true); return; }
+      renderTimers(); save();
+    }
+
+    function finishWorkout(){
+      const day = selectedDay(); const calories = estimateStrengthCalories();
+      const sessionId = uid();
+      const completedExercises = day.exercises.filter(ex=>ex.done).length;
+      state.history.push({ id:sessionId, day:'אימון גלוטס', date:todayText(), completedExercises, duration:state.timers.workoutSeconds, calories });
+      day.exercises.forEach(ex=>{
+        const weights = ex.sets.map(s=>Number(String(s.kg).replace(/[^0-9.]/g,''))||0).filter(n=>n>0);
+        if (weights.length) {
+          state.weightHistory.push({ sessionId, date:todayText(), libraryId:ex.libraryId, name:ex.name, maxKg:Math.max(...weights), avgKg:Math.round((weights.reduce((a,b)=>a+b,0)/weights.length)*10)/10 });
+        }
+        ex.done=false; ex.sets.forEach(s=>s.done=false);
+      });
+      state.activeExerciseIndex=0; state.timers.workoutSeconds=0; state.timers.restSecondsLeft=0;
+      clearInterval(workoutTimerInterval); workoutTimerInterval=null; state.timers.workoutRunning=false;
+      clearInterval(restTimerInterval); restTimerInterval=null; state.timers.restRunning=false; document.body.classList.remove('focus-mode');
+      const plan=createWorkoutPlan(); state.days=plan.days; state.selectedDayId=plan.selectedDayId;
+      render(); alert(`האימון נשמר • כ-${calories} קלוריות`);
+    }
+
+    function renderMusic(){
+      const input=document.getElementById('spotifyInput'); const iframe=document.getElementById('spotifyBar');
+      if (input) input.value = state.spotifyUrl || ''; if (iframe) iframe.src = spotifyEmbedUrl(state.spotifyUrl);
+    }
+
+    function spotifyEmbedUrl(url){
+      const fallback='https://open.spotify.com/embed/playlist/37i9dQZF1DX76Wlfdnj7AP?utm_source=generator&theme=0';
+      if (!url) return fallback;
+      if (url.includes('open.spotify.com/embed/')) return url.includes('?') ? url : url + '?utm_source=generator&theme=0';
+      const m=url.match(/open\.spotify\.com\/(playlist|album|track)\/([A-Za-z0-9]+)/);
+      if (!m) return fallback;
+      return `https://open.spotify.com/embed/${m[1]}/${m[2]}?utm_source=generator&theme=0`;
+    }
+
+    function saveSpotify(){
+      const value=document.getElementById('spotifyInput').value.trim();
+      if (!value.includes('spotify.com')) return alert('הדבק קישור Spotify תקין');
+      state.spotifyUrl=value; render();
+    }
+
+    function showSection(name){
+      document.getElementById('statsSection').classList.toggle('hidden', name !== 'workout');
+      document.getElementById('historySection').classList.toggle('hidden', name !== 'history');
+      document.getElementById('progressSection').classList.toggle('hidden', name !== 'progress');
+      document.getElementById('musicSection').classList.toggle('hidden', name !== 'music');
+    }
+
+    function escapeHtml(str){ return String(str ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+    document.getElementById('resetWorkoutBtn').addEventListener('click', resetWorkout);
+    document.getElementById('toggleWorkoutBtn').addEventListener('click', toggleWorkoutTimer);
+    document.getElementById('toggleRestBtn').addEventListener('click', () => toggleRestTimer(false));
+    document.getElementById('finishWorkoutTopBtn').addEventListener('click', finishWorkout);
+    document.getElementById('saveSpotifyBtn').addEventListener('click', saveSpotify);
+    document.getElementById('navWorkout').addEventListener('click', () => showSection('workout'));
+    document.getElementById('navHistory').addEventListener('click', () => showSection('history'));
+    document.getElementById('navProgress').addEventListener('click', () => showSection('progress'));
+    document.getElementById('navMusic').addEventListener('click', () => showSection('music'));
+
+    window.setActiveExercise=setActiveExercise;
+    window.updateSetField=updateSetField;
+    window.toggleSetDone=toggleSetDone;
+    window.deleteHistoryItem=deleteHistoryItem;
+    window.resetWorkout=resetWorkout;
+
+    showSection('workout'); render();
+  </script>
+</body>
+</html>
