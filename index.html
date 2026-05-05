@@ -6,17 +6,18 @@
   <title>Glutes Workout App</title>
   <style>
     :root {
-      --bg: #0b1017;
-      --panel: #111827;
-      --panel-2: #162033;
-      --panel-3: #0c1320;
-      --text: #f5f7fb;
-      --muted: #9eabc3;
-      --line: rgba(255,255,255,0.08);
-      --accent: #2bd3a0;
-      --accent-2: #1eb885;
-      --danger: #ff6f6f;
-      --shadow: 0 10px 28px rgba(0,0,0,.25);
+      --bg: #fff0f7;
+      --panel: rgba(255,255,255,.82);
+      --panel-2: rgba(255,232,244,.92);
+      --panel-3: rgba(255,245,250,.94);
+      --text: #341323;
+      --muted: #9c627d;
+      --line: rgba(214,51,132,0.16);
+      --accent: #e13b8b;
+      --accent-2: #ff77b7;
+      --accent-3: #b51569;
+      --danger: #ff5f8f;
+      --shadow: 0 14px 34px rgba(177,20,105,.18);
     }
 
     * { box-sizing: border-box; }
@@ -24,7 +25,7 @@
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, #08101a 0%, #0b1017 100%);
+      background: radial-gradient(circle at 20% 0%, rgba(255,119,183,.42) 0%, transparent 28%), linear-gradient(180deg, #ffe2f1 0%, #fff7fb 48%, #ffd5ea 100%);
       color: var(--text);
     }
 
@@ -40,9 +41,10 @@
     .card {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 24px;
+      border-radius: 26px;
       box-shadow: var(--shadow);
       padding: 14px;
+      backdrop-filter: blur(14px);
     }
 
     .topbar {
@@ -101,8 +103,8 @@
     }
 
     .day-card.active {
-      outline: 2px solid rgba(43,211,160,.35);
-      background: rgba(43,211,160,.10);
+      outline: 2px solid rgba(225,59,139,.35);
+      background: rgba(225,59,139,.12);
     }
 
     .progress-track {
@@ -117,7 +119,7 @@
       width: 100%;
       aspect-ratio: 1;
       border-radius: 999px;
-      background: #000;
+      background: rgba(255,255,255,.82);
       border: 1px solid var(--line);
       color: var(--text);
       display: flex;
@@ -131,7 +133,7 @@
 
     .progress-step.active {
       background: var(--accent);
-      color: #052017;
+      color: #fff;
     }
 
     .hero-image {
@@ -139,7 +141,7 @@
       height: 176px;
       object-fit: contain;
       border-radius: 16px;
-      background: #fff;
+      background: linear-gradient(180deg,#fff,#fff1f8);
       border: 1px solid var(--line);
       padding: 8px;
     }
@@ -180,7 +182,7 @@
 
     .primary {
       background: linear-gradient(180deg, var(--accent), var(--accent-2));
-      color: #082217;
+      color: #fff;
       font-weight: 800;
     }
 
@@ -216,8 +218,8 @@
     }
 
     .set-row.active {
-      box-shadow: inset 0 0 0 2px rgba(43,211,160,.35);
-      background: rgba(43,211,160,.08);
+      box-shadow: inset 0 0 0 2px rgba(225,59,139,.35);
+      background: rgba(225,59,139,.08);
     }
 
     .set-index {
@@ -227,7 +229,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #2a313d;
+      background: linear-gradient(180deg,#f07ab5,#d92f82);
       font-weight: 700;
       color: var(--text);
     }
@@ -241,7 +243,7 @@
 
     .tiny-input {
       width: 100%;
-      background: #020406;
+      background: rgba(255,255,255,.84);
       border: 1px solid rgba(255,255,255,.05);
       color: var(--text);
       border-radius: 10px;
@@ -264,7 +266,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: #0a0e14;
+      background: rgba(255,255,255,.75);
       color: var(--text);
       cursor: pointer;
       border: 1px solid var(--line);
@@ -272,15 +274,15 @@
     }
 
     .icon-btn.done {
-      background: rgba(43,211,160,.16);
-      color: #8ff3cb;
-      border-color: rgba(43,211,160,.26);
+      background: rgba(225,59,139,.14);
+      color: #c71f76;
+      border-color: rgba(225,59,139,.26);
     }
 
     .timer-footer {
       position: sticky;
       bottom: 92px;
-      background: rgba(20,26,35,.96);
+      background: rgba(255,245,250,.94);
       border: 1px solid var(--line);
       border-radius: 24px;
       padding: 10px;
@@ -307,12 +309,12 @@
 
     .footer-btn.done {
       background: linear-gradient(180deg, var(--accent), var(--accent-2));
-      color: #062117;
+      color: #fff;
     }
 
     .footer-btn.rest {
-      background: #05080d;
-      color: #d7dfef;
+      background: rgba(255,255,255,.78);
+      color: var(--text);
       border: 1px solid var(--line);
     }
 
@@ -398,7 +400,7 @@
     .sheet-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.5);
+      background: rgba(112,27,72,.35);
       display: none;
       z-index: 19;
     }
@@ -454,7 +456,7 @@
       object-fit: contain;
       border-radius: 12px;
       border: 1px solid var(--line);
-      background: #fff;
+      background: linear-gradient(180deg,#fff,#fff1f8);
       padding: 4px;
     }
 
@@ -464,7 +466,7 @@
       transform: translateX(-50%);
       bottom: 0;
       width: min(430px, 100vw);
-      background: rgba(10,14,20,.96);
+      background: rgba(255,239,247,.94);
       border-top: 1px solid var(--line);
       padding: 8px 10px 10px;
       z-index: 30;
@@ -499,12 +501,12 @@
     .card {
       box-shadow:
         0 14px 34px rgba(0,0,0,.32),
-        0 2px 10px rgba(43,211,160,.045);
+        0 2px 10px rgba(225,59,139,.045);
     }
 
     .mini-btn:hover, .secondary:hover, .day-card:hover, .icon-btn:hover, a.linkbtn:hover {
-      border-color: rgba(43,211,160,.28);
-      box-shadow: 0 0 0 1px rgba(43,211,160,.06), 0 10px 22px rgba(0,0,0,.18);
+      border-color: rgba(225,59,139,.28);
+      box-shadow: 0 0 0 1px rgba(225,59,139,.06), 0 10px 22px rgba(0,0,0,.18);
     }
 
     .progress-track {
@@ -513,9 +515,9 @@
     }
 
     .progress-step.done-step {
-      background: rgba(43,211,160,.22);
-      color: #baf8dd;
-      border-color: rgba(43,211,160,.28);
+      background: rgba(225,59,139,.22);
+      color: #c71f76;
+      border-color: rgba(225,59,139,.28);
     }
 
     .progress-bar {
@@ -531,8 +533,8 @@
       height: 100%;
       width: 0%;
       border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), #71f0c3, var(--accent-2));
-      box-shadow: 0 0 18px rgba(43,211,160,.28);
+      background: linear-gradient(90deg, var(--accent), #ff9ccc, var(--accent-2));
+      box-shadow: 0 0 18px rgba(225,59,139,.28);
       transition: width .45s ease;
     }
 
@@ -557,8 +559,8 @@
     .next-exercise-preview {
       margin-top: 10px;
       border-radius: 18px;
-      border: 1px solid rgba(43,211,160,.16);
-      background: linear-gradient(180deg, rgba(43,211,160,.09), rgba(255,255,255,.025));
+      border: 1px solid rgba(225,59,139,.16);
+      background: linear-gradient(180deg, rgba(225,59,139,.09), rgba(255,255,255,.025));
       padding: 10px 12px;
       display: grid;
       gap: 4px;
@@ -591,8 +593,8 @@
     }
 
     @keyframes doneFlash {
-      0% { background: rgba(43,211,160,.34); box-shadow: 0 0 0 2px rgba(43,211,160,.28) inset; }
-      100% { background: rgba(43,211,160,.08); box-shadow: none; }
+      0% { background: rgba(225,59,139,.34); box-shadow: 0 0 0 2px rgba(225,59,139,.28) inset; }
+      100% { background: rgba(225,59,139,.08); box-shadow: none; }
     }
 
     .timer-footer {
@@ -601,7 +603,7 @@
 
     .fixed-spotify {
       backdrop-filter: blur(18px);
-      background: rgba(10,14,20,.88);
+      background: rgba(255,239,247,.88);
     }
 
     body.focus-mode .days-grid,
@@ -611,8 +613,8 @@
     }
 
     body.focus-mode .card:first-child {
-      border-color: rgba(43,211,160,.20);
-      box-shadow: 0 18px 42px rgba(0,0,0,.38), 0 0 0 1px rgba(43,211,160,.06);
+      border-color: rgba(225,59,139,.20);
+      box-shadow: 0 18px 42px rgba(0,0,0,.38), 0 0 0 1px rgba(225,59,139,.06);
     }
 
     @media (max-width: 390px) {
@@ -632,6 +634,31 @@
 .quick-start-card { display:grid; gap:8px; }
 .quick-start-title { font-size:20px; font-weight:900; text-align:center; }
 .quick-start-sub { color:var(--muted); font-size:13px; text-align:center; line-height:1.4; }
+
+/* ===== Pink Goals + Last Weight Upgrade ===== */
+.goal-card {
+  margin-top: 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(225,59,139,.20);
+  background: linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,231,243,.82));
+  padding: 12px;
+  display: grid;
+  gap: 9px;
+}
+.goal-top { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.goal-title { font-weight:900; color:var(--text); }
+.goal-value { font-size:12px; color:var(--muted); }
+.goal-bar { height: 10px; border-radius:999px; overflow:hidden; background:rgba(225,59,139,.12); border:1px solid rgba(225,59,139,.12); }
+.goal-fill { height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg, var(--accent-3), var(--accent), var(--accent-2)); box-shadow:0 0 18px rgba(225,59,139,.24); transition:width .35s ease; }
+.goal-note { color:var(--muted); font-size:12px; line-height:1.4; }
+.goal-list-row { background:var(--panel-3); border:1px solid var(--line); border-radius:18px; padding:12px; margin-bottom:8px; }
+.goal-list-row .goal-bar { margin-top:9px; }
+.goal-actions { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; margin-top:8px; }
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; opacity:.34; z-index:-1;
+  background: radial-gradient(circle at 90% 12%, rgba(225,59,139,.24), transparent 22%), radial-gradient(circle at 12% 82%, rgba(255,119,183,.20), transparent 26%);
+}
+
 </style>
 </head>
 <body>
@@ -656,7 +683,9 @@
         <div class="action-row">
           <a class="linkbtn secondary" id="youtubeLink" href="#" target="_blank" rel="noopener">יוטיוב</a>
           <a class="linkbtn secondary" id="animationLink" href="#" target="_blank" rel="noopener">אנימציה</a>
+          <button class="secondary" id="setGoalActiveBtn" type="button">הגדרת יעד</button>
         </div>
+        <div id="goalBox"></div>
 
         <div class="sets-card" id="setsList"></div>
 
@@ -690,16 +719,22 @@
         <div id="progressHistoryList"></div>
       </div>
 
+      <div class="card section hidden" id="goalsSection">
+        <div class="section-title">יעדים לפי תרגיל</div>
+        <div id="goalsList"></div>
+      </div>
+
       <div class="card section hidden" id="musicSection">
         <div class="section-title">הפלייליסט שלי</div>
         <input id="spotifyInput" placeholder="הדבק קישור Spotify שלך" />
         <button class="primary full" id="saveSpotifyBtn" style="margin-top:10px;">שמור פלייליסט</button>
       </div>
 
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;">
         <button class="secondary" id="navWorkout">אימון</button>
         <button class="secondary" id="navHistory">היסטוריה</button>
         <button class="secondary" id="navProgress">משקלים</button>
+        <button class="secondary" id="navGoals">יעדים</button>
         <button class="secondary" id="navMusic">מוזיקה</button>
       </div>
     </div>
@@ -718,7 +753,7 @@
 
   <script>
     const STORAGE_KEY = 'glutes_app_v1';
-    const PLAN_VERSION = 'glutes-plan-v1';
+    const PLAN_VERSION = 'glutes-plan-v2-pink-goals';
     let workoutTimerInterval = null;
     let restTimerInterval = null;
 
@@ -731,34 +766,39 @@
 
     function uid(){ return 'id-' + Math.random().toString(36).slice(2,10); }
 
-    function makeSet(ex, i){
-      return { id: uid(), index: i + 1, reps: ex.reps || '10', kg: ex.kg || '0', done: false };
+    function getLastWeight(lastWeights, exerciseId, setIndex, fallback){
+      const saved = lastWeights?.[exerciseId]?.[setIndex];
+      return saved !== undefined && saved !== null && saved !== '' ? String(saved) : String(fallback || '0');
     }
 
-    function cloneExercise(id){
+    function makeSet(ex, i, lastWeights = {}){
+      return { id: uid(), index: i + 1, reps: ex.reps || '10', kg: getLastWeight(lastWeights, ex.id, i, ex.kg), done: false };
+    }
+
+    function cloneExercise(id, lastWeights = {}){
       const ex = LIBRARY.find(x => x.id === id);
       return {
         instanceId: uid(), libraryId: ex.id, type:'strength', name: ex.name,
         muscle: ex.muscle, equipment: ex.equipment, image: ex.image, video: ex.video,
         restSeconds: 90, done: false,
-        sets: [makeSet(ex,0), makeSet(ex,1), makeSet(ex,2)]
+        sets: [makeSet(ex,0,lastWeights), makeSet(ex,1,lastWeights), makeSet(ex,2,lastWeights)]
       };
     }
 
-    function createWorkoutPlan(){
+    function createWorkoutPlan(lastWeights = {}){
       return {
         days: [{ id: 'glutes-day', name: 'אימון גלוטס', label: '4 תרגילים · 3 סטים לכל תרגיל', exercises: [
-          cloneExercise('hip_thrust'), cloneExercise('good_morning'), cloneExercise('romanian_deadlift'), cloneExercise('cable_kickback')
+          cloneExercise('hip_thrust', lastWeights), cloneExercise('good_morning', lastWeights), cloneExercise('romanian_deadlift', lastWeights), cloneExercise('cable_kickback', lastWeights)
         ] }],
         selectedDayId: 'glutes-day'
       };
     }
 
     function defaultState(){
-      const plan = createWorkoutPlan();
+      const plan = createWorkoutPlan({});
       return {
         days: plan.days, selectedDayId: plan.selectedDayId, activeExerciseIndex:0,
-        history: [], weightHistory: [], spotifyUrl:'https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP',
+        history: [], weightHistory: [], lastWeights: {}, goals: {}, spotifyUrl:'https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP',
         filters: { search:'', muscle:'הכל', equipment:'הכל' },
         timers: { workoutSeconds:0, workoutRunning:false, restSecondsLeft:0, restRunning:false },
         planVersion: PLAN_VERSION
@@ -769,9 +809,11 @@
       if (!result || typeof result !== 'object') return defaultState();
       if (!Array.isArray(result.history)) result.history = [];
       if (!Array.isArray(result.weightHistory)) result.weightHistory = [];
+      if (!result.lastWeights || typeof result.lastWeights !== 'object') result.lastWeights = {};
+      if (!result.goals || typeof result.goals !== 'object') result.goals = {};
       if (!result.spotifyUrl) result.spotifyUrl = 'https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP';
       if (!result.timers) result.timers = { workoutSeconds:0, workoutRunning:false, restSecondsLeft:0, restRunning:false };
-      const plan = createWorkoutPlan();
+      const plan = createWorkoutPlan(result.lastWeights);
       result.days = plan.days;
       result.selectedDayId = plan.selectedDayId;
       result.activeExerciseIndex = Math.min(result.activeExerciseIndex || 0, 3);
@@ -793,7 +835,7 @@
 
     function render(){
       renderDays(); renderExerciseProgress(); renderActiveExercise(); renderNextExercise(); updateProgressBar();
-      renderStats(); renderHistory(); renderProgressHistory(); renderMusic(); renderTimers(); save();
+      renderStats(); renderHistory(); renderProgressHistory(); renderGoals(); renderMusic(); renderTimers(); save();
     }
 
     function renderDays(){
@@ -851,6 +893,45 @@
           </div>
           <button class="icon-btn ${set.done?'done':''}" onclick="toggleSetDone('${ex.instanceId}','${set.id}')">${set.done?'✓':'○'}</button>
         </div>`).join('');
+      renderGoalForActiveExercise();
+    }
+
+    function numericKg(value){
+      return Number(String(value ?? '').replace(/[^0-9.]/g,'')) || 0;
+    }
+
+    function getExerciseBestKg(libraryId){
+      const historyBest = state.weightHistory
+        .filter(w => w.libraryId === libraryId)
+        .reduce((best, row) => Math.max(best, Number(row.maxKg) || 0), 0);
+      const current = selectedDay().exercises
+        .find(ex => ex.libraryId === libraryId)?.sets
+        .reduce((best, set) => Math.max(best, numericKg(set.kg)), 0) || 0;
+      return Math.max(historyBest, current);
+    }
+
+    function goalPercent(libraryId){
+      const goal = Number(state.goals?.[libraryId]) || 0;
+      if (!goal) return 0;
+      return Math.min(100, Math.round((getExerciseBestKg(libraryId) / goal) * 100));
+    }
+
+    function renderGoalForActiveExercise(){
+      const box = document.getElementById('goalBox');
+      if (!box) return;
+      const ex = activeExercise();
+      const goal = Number(state.goals?.[ex.libraryId]) || 0;
+      const best = getExerciseBestKg(ex.libraryId);
+      const percent = goal ? goalPercent(ex.libraryId) : 0;
+      box.innerHTML = `
+        <div class="goal-card">
+          <div class="goal-top">
+            <div class="goal-title">יעד משקל אישי</div>
+            <div class="goal-value">${goal ? `${best} / ${goal} ק״ג` : 'לא הוגדר יעד'}</div>
+          </div>
+          <div class="goal-bar"><div class="goal-fill" style="width:${percent}%"></div></div>
+          <div class="goal-note">${goal ? `התקדמות ליעד: ${percent}%` : 'לחץ על הגדרת יעד כדי לקבוע יעד משקל לתרגיל הזה.'}</div>
+        </div>`;
     }
 
     function renderTimers(){
@@ -905,6 +986,46 @@
       }).join('') || '<div class="empty">אין עדיין נתוני משקל</div>';
     }
 
+    function renderGoals(){
+      const el = document.getElementById('goalsList');
+      if (!el) return;
+      el.innerHTML = LIBRARY.map(ex => {
+        const goal = Number(state.goals?.[ex.id]) || 0;
+        const best = getExerciseBestKg(ex.id);
+        const percent = goal ? Math.min(100, Math.round((best / goal) * 100)) : 0;
+        return `<div class="goal-list-row">
+          <strong>${escapeHtml(ex.name)}</strong>
+          <div style="margin-top:6px;color:var(--muted);font-size:12px;">${goal ? `שיא ${best} ק״ג מתוך יעד ${goal} ק״ג · ${percent}%` : 'עדיין לא הוגדר יעד'}</div>
+          <div class="goal-bar"><div class="goal-fill" style="width:${percent}%"></div></div>
+          <div class="goal-actions">
+            <button class="secondary" onclick="setGoalForExercise('${ex.id}')">הגדר / עדכן יעד</button>
+            ${goal ? `<button class="danger" onclick="clearGoalForExercise('${ex.id}')">נקה</button>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function setGoalForExercise(libraryId){
+      const ex = LIBRARY.find(item => item.id === libraryId);
+      const current = state.goals?.[libraryId] || '';
+      const value = prompt(`מה יעד המשקל ל${ex?.name || 'התרגיל'} בק״ג?`, current);
+      if (value === null) return;
+      const kg = numericKg(value);
+      if (!kg) return alert('נא להזין יעד מספרי גדול מ-0');
+      state.goals[libraryId] = kg;
+      save(); render();
+    }
+
+    function clearGoalForExercise(libraryId){
+      if (!confirm('למחוק את היעד לתרגיל הזה?')) return;
+      delete state.goals[libraryId];
+      save(); render();
+    }
+
+    function setGoalForActiveExercise(){
+      setGoalForExercise(activeExercise().libraryId);
+    }
+
     function deleteHistoryItem(id){
       if (!confirm('למחוק את האימון מההיסטוריה?')) return;
       state.history = state.history.filter(h=>h.id!==id);
@@ -931,7 +1052,7 @@
 
     function resetWorkout(){
       if (!confirm('לאפס ולפתוח אימון גלוטס חדש?')) return;
-      const plan = createWorkoutPlan();
+      const plan = createWorkoutPlan(state.lastWeights);
       state.days = plan.days; state.selectedDayId = plan.selectedDayId; state.activeExerciseIndex = 0;
       state.timers.workoutSeconds = 0; state.timers.restSecondsLeft = 0; state.timers.workoutRunning=false; state.timers.restRunning=false;
       clearInterval(workoutTimerInterval); clearInterval(restTimerInterval); document.body.classList.remove('focus-mode');
@@ -965,7 +1086,8 @@
       const completedExercises = day.exercises.filter(ex=>ex.done).length;
       state.history.push({ id:sessionId, day:'אימון גלוטס', date:todayText(), completedExercises, duration:state.timers.workoutSeconds, calories });
       day.exercises.forEach(ex=>{
-        const weights = ex.sets.map(s=>Number(String(s.kg).replace(/[^0-9.]/g,''))||0).filter(n=>n>0);
+        const weights = ex.sets.map(s=>numericKg(s.kg)).filter(n=>n>0);
+        state.lastWeights[ex.libraryId] = ex.sets.map(s => String(s.kg ?? '0'));
         if (weights.length) {
           state.weightHistory.push({ sessionId, date:todayText(), libraryId:ex.libraryId, name:ex.name, maxKg:Math.max(...weights), avgKg:Math.round((weights.reduce((a,b)=>a+b,0)/weights.length)*10)/10 });
         }
@@ -974,7 +1096,7 @@
       state.activeExerciseIndex=0; state.timers.workoutSeconds=0; state.timers.restSecondsLeft=0;
       clearInterval(workoutTimerInterval); workoutTimerInterval=null; state.timers.workoutRunning=false;
       clearInterval(restTimerInterval); restTimerInterval=null; state.timers.restRunning=false; document.body.classList.remove('focus-mode');
-      const plan=createWorkoutPlan(); state.days=plan.days; state.selectedDayId=plan.selectedDayId;
+      const plan=createWorkoutPlan(state.lastWeights); state.days=plan.days; state.selectedDayId=plan.selectedDayId;
       render(); alert(`האימון נשמר • כ-${calories} קלוריות`);
     }
 
@@ -1002,6 +1124,7 @@
       document.getElementById('statsSection').classList.toggle('hidden', name !== 'workout');
       document.getElementById('historySection').classList.toggle('hidden', name !== 'history');
       document.getElementById('progressSection').classList.toggle('hidden', name !== 'progress');
+      document.getElementById('goalsSection').classList.toggle('hidden', name !== 'goals');
       document.getElementById('musicSection').classList.toggle('hidden', name !== 'music');
     }
 
@@ -1012,15 +1135,19 @@
     document.getElementById('toggleRestBtn').addEventListener('click', () => toggleRestTimer(false));
     document.getElementById('finishWorkoutTopBtn').addEventListener('click', finishWorkout);
     document.getElementById('saveSpotifyBtn').addEventListener('click', saveSpotify);
+    document.getElementById('setGoalActiveBtn').addEventListener('click', setGoalForActiveExercise);
     document.getElementById('navWorkout').addEventListener('click', () => showSection('workout'));
     document.getElementById('navHistory').addEventListener('click', () => showSection('history'));
     document.getElementById('navProgress').addEventListener('click', () => showSection('progress'));
+    document.getElementById('navGoals').addEventListener('click', () => showSection('goals'));
     document.getElementById('navMusic').addEventListener('click', () => showSection('music'));
 
     window.setActiveExercise=setActiveExercise;
     window.updateSetField=updateSetField;
     window.toggleSetDone=toggleSetDone;
     window.deleteHistoryItem=deleteHistoryItem;
+    window.setGoalForExercise=setGoalForExercise;
+    window.clearGoalForExercise=clearGoalForExercise;
     window.resetWorkout=resetWorkout;
 
     showSection('workout'); render();
