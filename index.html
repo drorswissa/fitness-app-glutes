@@ -659,6 +659,45 @@ body::before {
   background: radial-gradient(circle at 90% 12%, rgba(225,59,139,.24), transparent 22%), radial-gradient(circle at 12% 82%, rgba(255,119,183,.20), transparent 26%);
 }
 
+/* ===== Big center timer replaces exercise demo image ===== */
+.timer-hero {
+  width: 100%;
+  height: 176px;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 50% 25%, rgba(255,119,183,.28), transparent 42%),
+    linear-gradient(180deg,#fff,#fff1f8);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.35),
+    0 14px 28px rgba(225,59,139,.12);
+}
+
+.timer-hero-label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.timer-hero-time {
+  font-size: 68px;
+  line-height: 1;
+  font-weight: 900;
+  color: var(--accent-3);
+  letter-spacing: 1px;
+  text-shadow: 0 8px 20px rgba(225,59,139,.18);
+}
+
+@media (max-width: 390px) {
+  .timer-hero-time { font-size: 58px; }
+}
+
 </style>
 </head>
 <body>
@@ -675,7 +714,10 @@ body::before {
         <div class="progress-track" id="exerciseProgress"></div>
         <div class="progress-bar"><div id="progressFill"></div></div>
 
-        <img id="activeExerciseImage" class="hero-image" alt="exercise" />
+        <div class="timer-hero" id="timerHero">
+          <div class="timer-hero-label">זמן אימון</div>
+          <div class="timer-hero-time" id="bigCenterTimer">00:00</div>
+        </div>
         <div class="exercise-title" id="activeExerciseName"></div>
         <div class="exercise-sub" id="activeExerciseDesc"></div>
         <div class="next-exercise-preview" id="nextExercisePreview"></div>
@@ -753,7 +795,7 @@ body::before {
 
   <script>
     const STORAGE_KEY = 'glutes_app_v1';
-    const PLAN_VERSION = 'glutes-plan-v2-pink-goals';
+    const PLAN_VERSION = 'glutes-plan-v4-center-timer-last-reps-kg';
     let workoutTimerInterval = null;
     let restTimerInterval = null;
 
@@ -766,29 +808,66 @@ body::before {
 
     function uid(){ return 'id-' + Math.random().toString(36).slice(2,10); }
 
-    function getLastWeight(lastWeights, exerciseId, setIndex, fallback){
-      const saved = lastWeights?.[exerciseId]?.[setIndex];
-      return saved !== undefined && saved !== null && saved !== '' ? String(saved) : String(fallback || '0');
+    function normalizeLastSetsData(result){
+      if (!result.lastSets || typeof result.lastSets !== 'object') result.lastSets = {};
+
+      // תאימות לגרסה קודמת ששמרה רק משקלים בשם lastWeights
+      if (result.lastWeights && typeof result.lastWeights === 'object') {
+        Object.keys(result.lastWeights).forEach(exerciseId => {
+          if (!result.lastSets[exerciseId]) result.lastSets[exerciseId] = {};
+          const oldArr = result.lastWeights[exerciseId];
+          if (Array.isArray(oldArr)) {
+            oldArr.forEach((kg, idx) => {
+              if (!result.lastSets[exerciseId][idx]) result.lastSets[exerciseId][idx] = {};
+              result.lastSets[exerciseId][idx].kg = String(kg ?? '0');
+            });
+          }
+        });
+      }
+
+      return result.lastSets;
     }
 
-    function makeSet(ex, i, lastWeights = {}){
-      return { id: uid(), index: i + 1, reps: ex.reps || '10', kg: getLastWeight(lastWeights, ex.id, i, ex.kg), done: false };
+    function getLastSetValue(lastSets, exerciseId, setIndex, field, fallback){
+      const saved = lastSets?.[exerciseId]?.[setIndex]?.[field];
+      return saved !== undefined && saved !== null && saved !== '' ? String(saved) : String(fallback || '');
     }
 
-    function cloneExercise(id, lastWeights = {}){
+    function saveCurrentSetToMemory(ex, set){
+      if (!ex || !set) return;
+      if (!state.lastSets) state.lastSets = {};
+      if (!state.lastSets[ex.libraryId]) state.lastSets[ex.libraryId] = {};
+
+      state.lastSets[ex.libraryId][set.index - 1] = {
+        reps: String(set.reps ?? ''),
+        kg: String(set.kg ?? '')
+      };
+    }
+
+    function makeSet(ex, i, lastSets = {}){
+      return {
+        id: uid(),
+        index: i + 1,
+        reps: getLastSetValue(lastSets, ex.id, i, 'reps', ex.reps || '10'),
+        kg: getLastSetValue(lastSets, ex.id, i, 'kg', ex.kg || '0'),
+        done: false
+      };
+    }
+
+    function cloneExercise(id, lastSets = {}){
       const ex = LIBRARY.find(x => x.id === id);
       return {
         instanceId: uid(), libraryId: ex.id, type:'strength', name: ex.name,
         muscle: ex.muscle, equipment: ex.equipment, image: ex.image, video: ex.video,
         restSeconds: 90, done: false,
-        sets: [makeSet(ex,0,lastWeights), makeSet(ex,1,lastWeights), makeSet(ex,2,lastWeights)]
+        sets: [makeSet(ex,0,lastSets), makeSet(ex,1,lastSets), makeSet(ex,2,lastSets)]
       };
     }
 
-    function createWorkoutPlan(lastWeights = {}){
+    function createWorkoutPlan(lastSets = {}){
       return {
         days: [{ id: 'glutes-day', name: 'אימון גלוטס', label: '4 תרגילים · 3 סטים לכל תרגיל', exercises: [
-          cloneExercise('hip_thrust', lastWeights), cloneExercise('good_morning', lastWeights), cloneExercise('romanian_deadlift', lastWeights), cloneExercise('cable_kickback', lastWeights)
+          cloneExercise('hip_thrust', lastSets), cloneExercise('good_morning', lastSets), cloneExercise('romanian_deadlift', lastSets), cloneExercise('cable_kickback', lastSets)
         ] }],
         selectedDayId: 'glutes-day'
       };
@@ -798,7 +877,7 @@ body::before {
       const plan = createWorkoutPlan({});
       return {
         days: plan.days, selectedDayId: plan.selectedDayId, activeExerciseIndex:0,
-        history: [], weightHistory: [], lastWeights: {}, goals: {}, spotifyUrl:'https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP',
+        history: [], weightHistory: [], lastSets: {}, goals: {}, spotifyUrl:'https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP',
         filters: { search:'', muscle:'הכל', equipment:'הכל' },
         timers: { workoutSeconds:0, workoutRunning:false, restSecondsLeft:0, restRunning:false },
         planVersion: PLAN_VERSION
@@ -809,11 +888,11 @@ body::before {
       if (!result || typeof result !== 'object') return defaultState();
       if (!Array.isArray(result.history)) result.history = [];
       if (!Array.isArray(result.weightHistory)) result.weightHistory = [];
-      if (!result.lastWeights || typeof result.lastWeights !== 'object') result.lastWeights = {};
+      result.lastSets = normalizeLastSetsData(result);
       if (!result.goals || typeof result.goals !== 'object') result.goals = {};
       if (!result.spotifyUrl) result.spotifyUrl = 'https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP';
       if (!result.timers) result.timers = { workoutSeconds:0, workoutRunning:false, restSecondsLeft:0, restRunning:false };
-      const plan = createWorkoutPlan(result.lastWeights);
+      const plan = createWorkoutPlan(result.lastSets);
       result.days = plan.days;
       result.selectedDayId = plan.selectedDayId;
       result.activeExerciseIndex = Math.min(result.activeExerciseIndex || 0, 3);
@@ -873,9 +952,7 @@ body::before {
     }
 
     function renderActiveExercise(){
-      const ex = activeExercise(); const img = document.getElementById('activeExerciseImage');
-      img.onerror = () => { img.onerror=null; img.src='https://via.placeholder.com/600x300?text=Exercise'; };
-      img.src = ex.image;
+      const ex = activeExercise();
       document.getElementById('activeExerciseName').textContent = ex.name;
       document.getElementById('activeExerciseDesc').textContent = `${ex.muscle} • ${ex.equipment} • 3 סטים`;
       document.getElementById('youtubeLink').href = ex.video || '#';
@@ -935,8 +1012,14 @@ body::before {
     }
 
     function renderTimers(){
-      document.getElementById('workoutTimerDisplay').textContent = formatTime(state.timers.workoutSeconds);
+      const workoutTime = formatTime(state.timers.workoutSeconds);
+
+      document.getElementById('workoutTimerDisplay').textContent = workoutTime;
       document.getElementById('restTimerDisplay').textContent = formatTime(state.timers.restSecondsLeft);
+
+      const bigTimer = document.getElementById('bigCenterTimer');
+      if (bigTimer) bigTimer.textContent = workoutTime;
+
       document.getElementById('toggleWorkoutBtn').textContent = state.timers.workoutRunning ? 'עצור אימון' : 'התחל אימון';
       document.getElementById('toggleRestBtn').textContent = state.timers.restRunning ? 'עצור מנוחה' : 'התחל מנוחה';
     }
@@ -1035,14 +1118,22 @@ body::before {
 
     function updateSetField(exerciseId,setId,field,value){
       const ex = selectedDay().exercises.find(e=>e.instanceId===exerciseId);
-      const set = ex?.sets.find(s=>s.id===setId); if (!set) return;
-      set[field] = value; save();
+      const set = ex?.sets.find(s=>s.id===setId);
+      if (!set) return;
+
+      set[field] = value;
+      saveCurrentSetToMemory(ex, set);
+
+      save();
     }
 
     function toggleSetDone(exerciseId,setId){
       const ex = selectedDay().exercises.find(e=>e.instanceId===exerciseId);
       const set = ex?.sets.find(s=>s.id===setId); if (!set) return;
-      set.done = !set.done; ex.done = ex.sets.every(s=>s.done);
+      set.done = !set.done;
+      saveCurrentSetToMemory(ex, set);
+
+      ex.done = ex.sets.every(s=>s.done);
       if (set.done) startRestTimer(true);
       if (ex.done && state.activeExerciseIndex < selectedDay().exercises.length - 1) state.activeExerciseIndex += 1;
       render();
@@ -1052,7 +1143,7 @@ body::before {
 
     function resetWorkout(){
       if (!confirm('לאפס ולפתוח אימון גלוטס חדש?')) return;
-      const plan = createWorkoutPlan(state.lastWeights);
+      const plan = createWorkoutPlan(state.lastSets);
       state.days = plan.days; state.selectedDayId = plan.selectedDayId; state.activeExerciseIndex = 0;
       state.timers.workoutSeconds = 0; state.timers.restSecondsLeft = 0; state.timers.workoutRunning=false; state.timers.restRunning=false;
       clearInterval(workoutTimerInterval); clearInterval(restTimerInterval); document.body.classList.remove('focus-mode');
@@ -1087,7 +1178,15 @@ body::before {
       state.history.push({ id:sessionId, day:'אימון גלוטס', date:todayText(), completedExercises, duration:state.timers.workoutSeconds, calories });
       day.exercises.forEach(ex=>{
         const weights = ex.sets.map(s=>numericKg(s.kg)).filter(n=>n>0);
-        state.lastWeights[ex.libraryId] = ex.sets.map(s => String(s.kg ?? '0'));
+
+        if (!state.lastSets) state.lastSets = {};
+        state.lastSets[ex.libraryId] = {};
+        ex.sets.forEach(s => {
+          state.lastSets[ex.libraryId][s.index - 1] = {
+            reps: String(s.reps ?? ''),
+            kg: String(s.kg ?? '')
+          };
+        });
         if (weights.length) {
           state.weightHistory.push({ sessionId, date:todayText(), libraryId:ex.libraryId, name:ex.name, maxKg:Math.max(...weights), avgKg:Math.round((weights.reduce((a,b)=>a+b,0)/weights.length)*10)/10 });
         }
@@ -1096,7 +1195,7 @@ body::before {
       state.activeExerciseIndex=0; state.timers.workoutSeconds=0; state.timers.restSecondsLeft=0;
       clearInterval(workoutTimerInterval); workoutTimerInterval=null; state.timers.workoutRunning=false;
       clearInterval(restTimerInterval); restTimerInterval=null; state.timers.restRunning=false; document.body.classList.remove('focus-mode');
-      const plan=createWorkoutPlan(state.lastWeights); state.days=plan.days; state.selectedDayId=plan.selectedDayId;
+      const plan=createWorkoutPlan(state.lastSets); state.days=plan.days; state.selectedDayId=plan.selectedDayId;
       render(); alert(`האימון נשמר • כ-${calories} קלוריות`);
     }
 
