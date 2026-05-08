@@ -78,7 +78,7 @@
 
     .days-grid {
       display: grid;
-      grid-template-columns: 1fr !important;
+      grid-template-columns: repeat(2, 1fr);
       gap: 8px;
       margin-bottom: 12px;
     }
@@ -109,9 +109,9 @@
 
     .progress-track {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(34px, 1fr));
+      grid-template-columns: repeat(6, 1fr);
       gap: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       align-items: center;
     }
 
@@ -136,62 +136,14 @@
       color: #fff;
     }
 
-    .progress-step.done-step {
-      background: rgba(225,59,139,.22);
-      color: #c71f76;
-      border-color: rgba(225,59,139,.28);
-    }
-
-    .progress-bar {
-      height: 7px;
-      background: rgba(255,255,255,.08);
-      border-radius: 999px;
-      overflow: hidden;
-      margin: 0 2px 14px;
-      border: 1px solid rgba(255,255,255,.045);
-    }
-
-    #progressFill {
-      height: 100%;
-      width: 0%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), #ff9ccc, var(--accent-2));
-      box-shadow: 0 0 18px rgba(225,59,139,.28);
-      transition: width .45s ease;
-    }
-
-    .timer-hero {
+    .hero-image {
       width: 100%;
       height: 176px;
+      object-fit: contain;
       border-radius: 16px;
-      background:
-        radial-gradient(circle at 50% 25%, rgba(255,119,183,.28), transparent 42%),
-        linear-gradient(180deg,#fff,#fff1f8);
+      background: linear-gradient(180deg,#fff,#fff1f8);
       border: 1px solid var(--line);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
       padding: 8px;
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.35),
-        0 14px 28px rgba(225,59,139,.12);
-    }
-
-    .timer-hero-label {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .timer-hero-time {
-      font-size: 68px;
-      line-height: 1;
-      font-weight: 900;
-      color: var(--accent-3);
-      letter-spacing: 1px;
-      text-shadow: 0 8px 20px rgba(225,59,139,.18);
     }
 
     .exercise-title {
@@ -242,7 +194,7 @@
 
     .danger {
       background: rgba(255,111,111,.13);
-      color: #b51569;
+      color: #ffb1b1;
       border: 1px solid rgba(255,111,111,.25);
     }
 
@@ -279,7 +231,7 @@
       justify-content: center;
       background: linear-gradient(180deg,#f07ab5,#d92f82);
       font-weight: 700;
-      color: #fff;
+      color: var(--text);
     }
 
     .input-wrap {
@@ -341,7 +293,6 @@
       box-shadow: var(--shadow);
       margin-top: 14px;
       z-index: 4;
-      backdrop-filter: blur(16px);
     }
 
     .footer-block { text-align: center; }
@@ -354,9 +305,6 @@
       padding: 14px 12px;
       font-weight: 700;
       cursor: pointer;
-      position: relative;
-      z-index: 10;
-      pointer-events: auto;
     }
 
     .footer-btn.done {
@@ -419,7 +367,7 @@
       height: 40px;
       border-radius: 14px;
       background: rgba(255,111,111,.13);
-      color: #b51569;
+      color: #ffb1b1;
       border: 1px solid rgba(255,111,111,.25);
       padding: 0;
       font-size: 17px;
@@ -435,6 +383,50 @@
       border-radius: 16px;
     }
 
+    .walk-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .walk-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    .sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(112,27,72,.35);
+      display: none;
+      z-index: 19;
+    }
+
+    .sheet-backdrop.open { display: block; }
+
+    .sheet {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 82px;
+      max-width: 430px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 14px;
+      max-height: 62vh;
+      overflow: auto;
+      display: none;
+      z-index: 20;
+      box-shadow: var(--shadow);
+    }
+
+    .sheet.open { display: block; }
+
     input, select {
       width: 100%;
       background: var(--panel-2);
@@ -446,17 +438,39 @@
       margin-top: 8px;
     }
 
+    .library-item {
+      background: var(--panel-3);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: 54px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .library-item img {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg,#fff,#fff1f8);
+      padding: 4px;
+    }
+
     .fixed-spotify {
       position: fixed;
       left: 50%;
       transform: translateX(-50%);
       bottom: 0;
       width: min(430px, 100vw);
-      background: rgba(255,239,247,.88);
+      background: rgba(255,239,247,.94);
       border-top: 1px solid var(--line);
       padding: 8px 10px 10px;
       z-index: 30;
-      backdrop-filter: blur(18px);
+      backdrop-filter: blur(10px);
     }
 
     .spotify-mini-label {
@@ -482,9 +496,62 @@
       transform: scale(.96);
     }
 
+    .card {
+      box-shadow:
+        0 14px 34px rgba(0,0,0,.32),
+        0 2px 10px rgba(225,59,139,.045);
+    }
+
     .mini-btn:hover, .secondary:hover, .day-card:hover, .icon-btn:hover, a.linkbtn:hover {
       border-color: rgba(225,59,139,.28);
       box-shadow: 0 0 0 1px rgba(225,59,139,.06), 0 10px 22px rgba(0,0,0,.18);
+    }
+
+    .progress-track {
+      grid-template-columns: repeat(auto-fit, minmax(34px, 1fr));
+      margin-bottom: 10px;
+    }
+
+    .progress-step.done-step {
+      background: rgba(225,59,139,.22);
+      color: #c71f76;
+      border-color: rgba(225,59,139,.28);
+    }
+
+    .progress-bar {
+      height: 7px;
+      background: rgba(255,255,255,.08);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 0 2px 14px;
+      border: 1px solid rgba(255,255,255,.045);
+    }
+
+    #progressFill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), #ff9ccc, var(--accent-2));
+      box-shadow: 0 0 18px rgba(225,59,139,.28);
+      transition: width .45s ease;
+    }
+
+    .hero-image {
+      transition: transform .28s ease, filter .28s ease, box-shadow .28s ease;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+
+    .hero-image:hover {
+      transform: translateY(-1px) scale(1.005);
+    }
+
+    .exercise-title, .exercise-sub, .sets-card {
+      animation: softEnter .26s ease;
+    }
+
+    @keyframes softEnter {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .next-exercise-preview {
@@ -510,33 +577,58 @@
       line-height: 1.25;
     }
 
+    .set-row {
+      transition: transform .18s ease, background .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+
+    .set-row:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.12);
+    }
+
+    .set-row.set-done-flash {
+      animation: doneFlash .48s ease;
+    }
+
+    @keyframes doneFlash {
+      0% { background: rgba(225,59,139,.34); box-shadow: 0 0 0 2px rgba(225,59,139,.28) inset; }
+      100% { background: rgba(225,59,139,.08); box-shadow: none; }
+    }
+
+    .timer-footer {
+      backdrop-filter: blur(16px);
+    }
+
+    .fixed-spotify {
+      backdrop-filter: blur(18px);
+      background: rgba(255,239,247,.88);
+    }
+
     body.focus-mode .days-grid,
     body.focus-mode .stats-grid,
     body.focus-mode #statsSection .section-title {
       display: none !important;
     }
 
-    .progress-history-card {
-      background: var(--panel-3);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 12px;
-      margin-bottom: 10px;
+    body.focus-mode .card:first-child {
+      border-color: rgba(225,59,139,.20);
+      box-shadow: 0 18px 42px rgba(0,0,0,.38), 0 0 0 1px rgba(225,59,139,.06);
     }
 
+    @media (max-width: 390px) {
+      .progress-track { gap: 6px; }
+      .progress-step { font-size: 12px; }
+      .next-exercise-preview { padding: 9px 10px; }
+    }
+
+    .days-grid { grid-template-columns: 1fr !important; }
+    .progress-history-card { background: var(--panel-3); border: 1px solid var(--line); border-radius: 18px; padding: 12px; margin-bottom: 10px; }
     .progress-ex-title { font-weight: 900; margin-bottom: 8px; }
-
-    .progress-line {
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      color: var(--muted);
-      font-size:12px;
-      padding:6px 0;
-      border-top:1px solid rgba(255,255,255,.05);
-    }
-
+    .progress-line { display:flex; justify-content:space-between; gap:10px; color: var(--muted); font-size:12px; padding:6px 0; border-top:1px solid rgba(255,255,255,.05); }
     .progress-line:first-of-type { border-top:0; }
+    .quick-start-card { display:grid; gap:8px; }
+    .quick-start-title { font-size:20px; font-weight:900; text-align:center; }
+    .quick-start-sub { color:var(--muted); font-size:13px; text-align:center; line-height:1.4; }
 
     .goal-card {
       margin-top: 12px;
@@ -547,88 +639,60 @@
       display: grid;
       gap: 9px;
     }
-
-    .goal-top {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-    }
-
+    .goal-top { display:flex; justify-content:space-between; align-items:center; gap:10px; }
     .goal-title { font-weight:900; color:var(--text); }
     .goal-value { font-size:12px; color:var(--muted); }
-
-    .goal-bar {
-      height: 10px;
-      border-radius:999px;
-      overflow:hidden;
-      background:rgba(225,59,139,.12);
-      border:1px solid rgba(225,59,139,.12);
-    }
-
-    .goal-fill {
-      height:100%;
-      width:0%;
-      border-radius:999px;
-      background:linear-gradient(90deg, var(--accent-3), var(--accent), var(--accent-2));
-      box-shadow:0 0 18px rgba(225,59,139,.24);
-      transition:width .35s ease;
-    }
-
-    .goal-note {
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.4;
-    }
-
-    .goal-list-row {
-      background:var(--panel-3);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:12px;
-      margin-bottom:8px;
-    }
-
+    .goal-bar { height: 10px; border-radius:999px; overflow:hidden; background:rgba(225,59,139,.12); border:1px solid rgba(225,59,139,.12); }
+    .goal-fill { height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg, var(--accent-3), var(--accent), var(--accent-2)); box-shadow:0 0 18px rgba(225,59,139,.24); transition:width .35s ease; }
+    .goal-note { color:var(--muted); font-size:12px; line-height:1.4; }
+    .goal-list-row { background:var(--panel-3); border:1px solid var(--line); border-radius:18px; padding:12px; margin-bottom:8px; }
     .goal-list-row .goal-bar { margin-top:9px; }
-
-    .goal-actions {
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:8px;
-      align-items:center;
-      margin-top:8px;
-    }
-
+    .goal-actions { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; margin-top:8px; }
     body::before {
-      content:'';
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      opacity:.34;
-      z-index:-1;
+      content:''; position:fixed; inset:0; pointer-events:none; opacity:.34; z-index:-1;
       background: radial-gradient(circle at 90% 12%, rgba(225,59,139,.24), transparent 22%), radial-gradient(circle at 12% 82%, rgba(255,119,183,.20), transparent 26%);
     }
 
+    .timer-hero {
+      width: 100%;
+      height: 176px;
+      border-radius: 16px;
+      background:
+        radial-gradient(circle at 50% 25%, rgba(255,119,183,.28), transparent 42%),
+        linear-gradient(180deg,#fff,#fff1f8);
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.35),
+        0 14px 28px rgba(225,59,139,.12);
+    }
+
+    .timer-hero-label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .timer-hero-time {
+      font-size: 68px;
+      line-height: 1;
+      font-weight: 900;
+      color: var(--accent-3);
+      letter-spacing: 1px;
+      text-shadow: 0 8px 20px rgba(225,59,139,.18);
+    }
+
     @media (max-width: 390px) {
-      .progress-track { gap: 6px; }
-      .progress-step { font-size: 12px; }
-      .next-exercise-preview { padding: 9px 10px; }
       .timer-hero-time { font-size: 58px; }
-      .set-row {
-        grid-template-columns: 34px 1fr 1fr auto;
-        gap: 7px;
-        padding: 10px;
-      }
-      .input-wrap {
-        grid-template-columns: 1fr;
-        gap: 4px;
-      }
-      .unit {
-        text-align: center;
-      }
     }
   </style>
 </head>
+
 <body>
   <div class="app">
     <div class="stack">
@@ -644,7 +708,7 @@
         <div class="progress-bar"><div id="progressFill"></div></div>
 
         <div class="timer-hero" id="timerHero">
-          <div class="timer-hero-label" id="bigTimerLabel">זמן עבודה</div>
+          <div class="timer-hero-label">זמן מנוחה</div>
           <div class="timer-hero-time" id="bigCenterTimer">00:00</div>
         </div>
 
@@ -725,56 +789,18 @@
 
   <script>
     const STORAGE_KEY = 'glutes_app_v1';
-    const PLAN_VERSION = 'glutes-plan-v5-big-rest-timer';
+    const PLAN_VERSION = 'glutes-plan-v4-center-timer-last-reps-kg';
     let workoutTimerInterval = null;
     let restTimerInterval = null;
 
     const LIBRARY = [
-      {
-        id:'hip_thrust',
-        name:'היפ טראסט',
-        muscle:'גלוטס',
-        equipment:'מוט / מכונה',
-        reps:'10',
-        kg:'0',
-        image:'https://fitnessprogramer.com/wp-content/uploads/2021/05/Barbell-Hip-Thrust.gif',
-        video:'https://www.youtube.com/results?search_query=barbell+hip+thrust+proper+form'
-      },
-      {
-        id:'good_morning',
-        name:'גוד מורנינג',
-        muscle:'גלוטס + המסטרינג',
-        equipment:'מוט',
-        reps:'10',
-        kg:'0',
-        image:'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Good-Morning.gif',
-        video:'https://www.youtube.com/results?search_query=barbell+good+morning+exercise+proper+form'
-      },
-      {
-        id:'romanian_deadlift',
-        name:'דדליפט רומני',
-        muscle:'גלוטס + המסטרינג',
-        equipment:'מוט / משקולות',
-        reps:'10',
-        kg:'0',
-        image:'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Romanian-Deadlift.gif',
-        video:'https://www.youtube.com/results?search_query=romanian+deadlift+proper+form'
-      },
-      {
-        id:'cable_kickback',
-        name:'קיקבאקס',
-        muscle:'גלוטס',
-        equipment:'כבלים',
-        reps:'12',
-        kg:'0',
-        image:'https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Glute-Kickback.gif',
-        video:'https://www.youtube.com/results?search_query=cable+glute+kickback+proper+form'
-      }
+      { id:'hip_thrust', name:'היפ טראסט', muscle:'גלוטס', equipment:'מוט / מכונה', reps:'10', kg:'0', image:'https://fitnessprogramer.com/wp-content/uploads/2021/05/Barbell-Hip-Thrust.gif', video:'https://www.youtube.com/results?search_query=barbell+hip+thrust+proper+form' },
+      { id:'good_morning', name:'גוד מורנינג', muscle:'גלוטס + המסטרינג', equipment:'מוט', reps:'10', kg:'0', image:'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Good-Morning.gif', video:'https://www.youtube.com/results?search_query=barbell+good+morning+exercise+proper+form' },
+      { id:'romanian_deadlift', name:'דדליפט רומני', muscle:'גלוטס + המסטרינג', equipment:'מוט / משקולות', reps:'10', kg:'0', image:'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Romanian-Deadlift.gif', video:'https://www.youtube.com/results?search_query=romanian+deadlift+proper+form' },
+      { id:'cable_kickback', name:'קיקבאקס', muscle:'גלוטס', equipment:'כבלים', reps:'12', kg:'0', image:'https://fitnessprogramer.com/wp-content/uploads/2021/02/Cable-Glute-Kickback.gif', video:'https://www.youtube.com/results?search_query=cable+glute+kickback+proper+form' }
     ];
 
-    function uid(){
-      return 'id-' + Math.random().toString(36).slice(2,10);
-    }
+    function uid(){ return 'id-' + Math.random().toString(36).slice(2,10); }
 
     function normalizeLastSetsData(result){
       if (!result.lastSets || typeof result.lastSets !== 'object') result.lastSets = {};
@@ -783,7 +809,6 @@
         Object.keys(result.lastWeights).forEach(exerciseId => {
           if (!result.lastSets[exerciseId]) result.lastSets[exerciseId] = {};
           const oldArr = result.lastWeights[exerciseId];
-
           if (Array.isArray(oldArr)) {
             oldArr.forEach((kg, idx) => {
               if (!result.lastSets[exerciseId][idx]) result.lastSets[exerciseId][idx] = {};
@@ -824,142 +849,66 @@
 
     function cloneExercise(id, lastSets = {}){
       const ex = LIBRARY.find(x => x.id === id);
-
       return {
-        instanceId: uid(),
-        libraryId: ex.id,
-        type:'strength',
-        name: ex.name,
-        muscle: ex.muscle,
-        equipment: ex.equipment,
-        image: ex.image,
-        video: ex.video,
-        restSeconds: 90,
-        done: false,
-        sets: [
-          makeSet(ex, 0, lastSets),
-          makeSet(ex, 1, lastSets),
-          makeSet(ex, 2, lastSets)
-        ]
+        instanceId: uid(), libraryId: ex.id, type:'strength', name: ex.name,
+        muscle: ex.muscle, equipment: ex.equipment, image: ex.image, video: ex.video,
+        restSeconds: 90, done: false,
+        sets: [makeSet(ex,0,lastSets), makeSet(ex,1,lastSets), makeSet(ex,2,lastSets)]
       };
     }
 
     function createWorkoutPlan(lastSets = {}){
       return {
-        days: [
-          {
-            id: 'glutes-day',
-            name: 'אימון גלוטס',
-            label: '4 תרגילים · 3 סטים לכל תרגיל',
-            exercises: [
-              cloneExercise('hip_thrust', lastSets),
-              cloneExercise('good_morning', lastSets),
-              cloneExercise('romanian_deadlift', lastSets),
-              cloneExercise('cable_kickback', lastSets)
-            ]
-          }
-        ],
+        days: [{ id: 'glutes-day', name: 'אימון גלוטס', label: '4 תרגילים · 3 סטים לכל תרגיל', exercises: [
+          cloneExercise('hip_thrust', lastSets), cloneExercise('good_morning', lastSets), cloneExercise('romanian_deadlift', lastSets), cloneExercise('cable_kickback', lastSets)
+        ] }],
         selectedDayId: 'glutes-day'
       };
     }
 
     function defaultState(){
       const plan = createWorkoutPlan({});
-
       return {
-        days: plan.days,
-        selectedDayId: plan.selectedDayId,
-        activeExerciseIndex: 0,
-        history: [],
-        weightHistory: [],
-        lastSets: {},
-        goals: {},
-        spotifyUrl: 'https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP',
+        days: plan.days, selectedDayId: plan.selectedDayId, activeExerciseIndex:0,
+        history: [], weightHistory: [], lastSets: {}, goals: {}, spotifyUrl:'https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP',
         filters: { search:'', muscle:'הכל', equipment:'הכל' },
-        timers: {
-          workoutSeconds: 0,
-          workoutRunning: false,
-          restSecondsLeft: 0,
-          restRunning: false
-        },
+        timers: { workoutSeconds:0, workoutRunning:false, restSecondsLeft:0, restRunning:false },
         planVersion: PLAN_VERSION
       };
     }
 
     function normalizeState(result){
       if (!result || typeof result !== 'object') return defaultState();
-
       if (!Array.isArray(result.history)) result.history = [];
       if (!Array.isArray(result.weightHistory)) result.weightHistory = [];
-
       result.lastSets = normalizeLastSetsData(result);
-
       if (!result.goals || typeof result.goals !== 'object') result.goals = {};
       if (!result.spotifyUrl) result.spotifyUrl = 'https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP';
-
-      if (!result.timers) {
-        result.timers = {
-          workoutSeconds: 0,
-          workoutRunning: false,
-          restSecondsLeft: 0,
-          restRunning: false
-        };
-      }
-
+      if (!result.timers) result.timers = { workoutSeconds:0, workoutRunning:false, restSecondsLeft:0, restRunning:false };
       const plan = createWorkoutPlan(result.lastSets);
       result.days = plan.days;
       result.selectedDayId = plan.selectedDayId;
       result.activeExerciseIndex = Math.min(result.activeExerciseIndex || 0, 3);
       result.planVersion = PLAN_VERSION;
-
       return result;
     }
 
     function load(){
-      try {
-        return normalizeState(JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'));
-      } catch {
-        return defaultState();
-      }
+      try { return normalizeState(JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null')); }
+      catch { return defaultState(); }
     }
 
     let state = load();
 
-    function save(){
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    }
-
-    function selectedDay(){
-      return state.days[0];
-    }
-
-    function activeExercise(){
-      return selectedDay().exercises[state.activeExerciseIndex] || selectedDay().exercises[0];
-    }
-
-    function formatTime(s){
-      const m = String(Math.floor((s || 0) / 60)).padStart(2,'0');
-      const ss = String((s || 0) % 60).padStart(2,'0');
-      return `${m}:${ss}`;
-    }
-
-    function todayText(){
-      return new Date().toLocaleDateString('he-IL');
-    }
+    function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    function selectedDay(){ return state.days[0]; }
+    function activeExercise(){ return selectedDay().exercises[state.activeExerciseIndex] || selectedDay().exercises[0]; }
+    function formatTime(s){ const m=String(Math.floor((s||0)/60)).padStart(2,'0'); const ss=String((s||0)%60).padStart(2,'0'); return `${m}:${ss}`; }
+    function todayText(){ return new Date().toLocaleDateString('he-IL'); }
 
     function render(){
-      renderDays();
-      renderExerciseProgress();
-      renderActiveExercise();
-      renderNextExercise();
-      updateProgressBar();
-      renderStats();
-      renderHistory();
-      renderProgressHistory();
-      renderGoals();
-      renderMusic();
-      renderTimers();
-      save();
+      renderDays(); renderExerciseProgress(); renderActiveExercise(); renderNextExercise(); updateProgressBar();
+      renderStats(); renderHistory(); renderProgressHistory(); renderGoals(); renderMusic(); renderTimers(); save();
     }
 
     function renderDays(){
@@ -967,72 +916,54 @@
         <button class="day-card active" onclick="resetWorkout()">
           אימון גלוטס
           <small>לחיצה מאפסת ופותחת את ארבעת התרגילים</small>
-        </button>
-      `;
+        </button>`;
     }
 
     function renderExerciseProgress(){
       const items = selectedDay().exercises;
-
-      document.getElementById('exerciseProgress').innerHTML = items.map((ex, i) => `
-        <div class="progress-step ${i === state.activeExerciseIndex ? 'active' : ''} ${ex.done ? 'done-step' : ''}" onclick="setActiveExercise(${i})">
-          ${i + 1}
-        </div>
+      document.getElementById('exerciseProgress').innerHTML = items.map((ex,i)=>`
+        <div class="progress-step ${i===state.activeExerciseIndex?'active':''} ${ex.done?'done-step':''}" onclick="setActiveExercise(${i})">${i+1}</div>
       `).join('');
     }
 
     function updateProgressBar(){
       const fill = document.getElementById('progressFill');
       if (!fill) return;
-
       const total = selectedDay().exercises.length || 1;
       const completed = selectedDay().exercises.filter(ex => ex.done).length;
       const percent = Math.round((completed / total) * 100);
-
       fill.style.width = percent + '%';
     }
 
     function renderNextExercise(){
       const el = document.getElementById('nextExercisePreview');
       const next = selectedDay().exercises[state.activeExerciseIndex + 1];
-
       el.innerHTML = next ? `
         <div class="next-exercise-label">התרגיל הבא</div>
-        <div class="next-exercise-name">${escapeHtml(next.name)} · ${escapeHtml(next.muscle)}</div>
-      ` : `
+        <div class="next-exercise-name">${escapeHtml(next.name)} · ${escapeHtml(next.muscle)}</div>` : `
         <div class="next-exercise-label">סיום קרוב</div>
-        <div class="next-exercise-name">זה התרגיל האחרון באימון</div>
-      `;
+        <div class="next-exercise-name">זה התרגיל האחרון באימון</div>`;
     }
 
     function renderActiveExercise(){
       const ex = activeExercise();
-
       document.getElementById('activeExerciseName').textContent = ex.name;
       document.getElementById('activeExerciseDesc').textContent = `${ex.muscle} • ${ex.equipment} • 3 סטים`;
       document.getElementById('youtubeLink').href = ex.video || '#';
       document.getElementById('animationLink').href = `https://www.youtube.com/results?search_query=${encodeURIComponent(ex.name + ' exercise animation')}`;
-
-      document.getElementById('setsList').innerHTML = ex.sets.map((set, idx) => `
-        <div class="set-row ${!set.done && idx === ex.sets.findIndex(s => !s.done) ? 'active' : ''}">
+      document.getElementById('setsList').innerHTML = ex.sets.map((set,idx)=>`
+        <div class="set-row ${!set.done && idx===ex.sets.findIndex(s=>!s.done)?'active':''}">
           <div class="set-index">${set.index}</div>
-
           <div class="input-wrap">
             <input class="tiny-input" value="${escapeHtml(set.reps)}" onchange="updateSetField('${ex.instanceId}','${set.id}','reps',this.value)" />
             <span class="unit">Reps</span>
           </div>
-
           <div class="input-wrap">
             <input class="tiny-input" value="${escapeHtml(set.kg)}" onchange="updateSetField('${ex.instanceId}','${set.id}','kg',this.value)" />
             <span class="unit">Kg</span>
           </div>
-
-          <button class="icon-btn ${set.done ? 'done' : ''}" onclick="toggleSetDone('${ex.instanceId}','${set.id}')">
-            ${set.done ? '✓' : '○'}
-          </button>
-        </div>
-      `).join('');
-
+          <button class="icon-btn ${set.done?'done':''}" onclick="toggleSetDone('${ex.instanceId}','${set.id}')">${set.done?'✓':'○'}</button>
+        </div>`).join('');
       renderGoalForActiveExercise();
     }
 
@@ -1044,46 +975,34 @@
       const historyBest = state.weightHistory
         .filter(w => w.libraryId === libraryId)
         .reduce((best, row) => Math.max(best, Number(row.maxKg) || 0), 0);
-
       const current = selectedDay().exercises
         .find(ex => ex.libraryId === libraryId)?.sets
         .reduce((best, set) => Math.max(best, numericKg(set.kg)), 0) || 0;
-
       return Math.max(historyBest, current);
     }
 
     function goalPercent(libraryId){
       const goal = Number(state.goals?.[libraryId]) || 0;
       if (!goal) return 0;
-
       return Math.min(100, Math.round((getExerciseBestKg(libraryId) / goal) * 100));
     }
 
     function renderGoalForActiveExercise(){
       const box = document.getElementById('goalBox');
       if (!box) return;
-
       const ex = activeExercise();
       const goal = Number(state.goals?.[ex.libraryId]) || 0;
       const best = getExerciseBestKg(ex.libraryId);
       const percent = goal ? goalPercent(ex.libraryId) : 0;
-
       box.innerHTML = `
         <div class="goal-card">
           <div class="goal-top">
             <div class="goal-title">יעד משקל אישי</div>
             <div class="goal-value">${goal ? `${best} / ${goal} ק״ג` : 'לא הוגדר יעד'}</div>
           </div>
-
-          <div class="goal-bar">
-            <div class="goal-fill" style="width:${percent}%"></div>
-          </div>
-
-          <div class="goal-note">
-            ${goal ? `התקדמות ליעד: ${percent}%` : 'לחץ על הגדרת יעד כדי לקבוע יעד משקל לתרגיל הזה.'}
-          </div>
-        </div>
-      `;
+          <div class="goal-bar"><div class="goal-fill" style="width:${percent}%"></div></div>
+          <div class="goal-note">${goal ? `התקדמות ליעד: ${percent}%` : 'לחץ על הגדרת יעד כדי לקבוע יעד משקל לתרגיל הזה.'}</div>
+        </div>`;
     }
 
     function renderTimers(){
@@ -1094,132 +1013,73 @@
       document.getElementById('restTimerDisplay').textContent = restTime;
 
       const bigTimer = document.getElementById('bigCenterTimer');
-      const bigLabel = document.getElementById('bigTimerLabel');
+      if (bigTimer) bigTimer.textContent = restTime;
 
-      if (state.timers.restRunning) {
-        if (bigLabel) bigLabel.textContent = 'זמן מנוחה';
-        if (bigTimer) bigTimer.textContent = restTime;
-      } else {
-        if (bigLabel) bigLabel.textContent = 'זמן עבודה';
-        if (bigTimer) bigTimer.textContent = workoutTime;
-      }
-
-      document.getElementById('toggleWorkoutBtn').textContent =
-        state.timers.workoutRunning ? 'עצור אימון' : 'התחל אימון';
-
-      document.getElementById('toggleRestBtn').textContent =
-        state.timers.restRunning ? 'עצור מנוחה' : 'התחל מנוחה';
+      document.getElementById('toggleWorkoutBtn').textContent = state.timers.workoutRunning ? 'עצור אימון' : 'התחל אימון';
+      document.getElementById('toggleRestBtn').textContent = state.timers.restRunning ? 'עצור מנוחה' : 'התחל מנוחה';
     }
 
     function estimateStrengthCalories(){
       const minutes = Math.max(1, Math.round((state.timers.workoutSeconds || 0) / 60));
       const completedSets = selectedDay().exercises.reduce((sum, ex) => sum + ex.sets.filter(s => s.done).length, 0);
-
       return Math.round((minutes * 4.5) + (completedSets * 3));
     }
 
     function renderStats(){
       document.getElementById('totalWorkouts').textContent = state.history.length;
-      document.getElementById('totalExercises').textContent = state.history.reduce((s,h) => s + (h.completedExercises || 0), 0);
-      document.getElementById('streak').textContent = [...new Set(state.history.map(h => h.date))].length;
-      document.getElementById('totalCalories').textContent = state.history.reduce((s,h) => s + (h.calories || 0), 0);
+      document.getElementById('totalExercises').textContent = state.history.reduce((s,h)=>s+(h.completedExercises||0),0);
+      document.getElementById('streak').textContent = [...new Set(state.history.map(h=>h.date))].length;
+      document.getElementById('totalCalories').textContent = state.history.reduce((s,h)=>s+(h.calories||0),0);
     }
 
     function getItemTimeValue(dateText){
       if (!dateText) return 0;
-
       const parts = String(dateText).split('.').map(Number);
-
-      if (parts.length === 3) {
-        const [day, month, year] = parts;
-        return new Date(year, month - 1, day).getTime();
-      }
-
-      const fallback = new Date(dateText).getTime();
-      return Number.isNaN(fallback) ? 0 : fallback;
+      if (parts.length === 3) { const [day,month,year]=parts; return new Date(year,month-1,day).getTime(); }
+      const fallback = new Date(dateText).getTime(); return Number.isNaN(fallback) ? 0 : fallback;
     }
 
     function renderHistory(){
       const el = document.getElementById('historyList');
-      const items = [...state.history].sort((a,b) => getItemTimeValue(b.date) - getItemTimeValue(a.date));
-
-      if (!items.length) {
-        el.innerHTML = '<div class="empty">עדיין אין היסטוריה</div>';
-        return;
-      }
-
-      el.innerHTML = items.map(h => `
-        <div class="history-item">
-          <div class="history-row">
-            <div>
-              <strong>${escapeHtml(h.day)}</strong>
-              <div style="margin-top:6px;color:var(--muted);font-size:12px;">
-                ${escapeHtml(h.date)} • ${h.completedExercises || 0} תרגילים • זמן ${formatTime(h.duration || 0)} • ${h.calories || 0} קל׳
-              </div>
-            </div>
-
-            <button class="history-delete-btn" onclick="deleteHistoryItem('${h.id}')" title="מחיקת אימון">🗑</button>
-          </div>
-        </div>
-      `).join('');
+      const items = [...state.history].sort((a,b)=>getItemTimeValue(b.date)-getItemTimeValue(a.date));
+      if (!items.length) { el.innerHTML='<div class="empty">עדיין אין היסטוריה</div>'; return; }
+      el.innerHTML = items.map(h=>`
+        <div class="history-item"><div class="history-row"><div>
+          <strong>${escapeHtml(h.day)}</strong>
+          <div style="margin-top:6px;color:var(--muted);font-size:12px;">${escapeHtml(h.date)} • ${h.completedExercises||0} תרגילים • זמן ${formatTime(h.duration||0)} • ${h.calories||0} קל׳</div>
+        </div><button class="history-delete-btn" onclick="deleteHistoryItem('${h.id}')" title="מחיקת אימון">🗑</button></div></div>`).join('');
     }
 
     function renderProgressHistory(){
       const el = document.getElementById('progressHistoryList');
-
-      if (!state.weightHistory.length) {
-        el.innerHTML = '<div class="empty">אחרי שתסיים אימון, יופיע כאן מעקב משקלים לפי תרגיל</div>';
-        return;
-      }
-
-      el.innerHTML = LIBRARY.map(ex => {
-        const rows = state.weightHistory.filter(w => w.libraryId === ex.id).slice(-6).reverse();
-
+      if (!state.weightHistory.length) { el.innerHTML='<div class="empty">אחרי שתסיים אימון, יופיע כאן מעקב משקלים לפי תרגיל</div>'; return; }
+      el.innerHTML = LIBRARY.map(ex=>{
+        const rows = state.weightHistory.filter(w=>w.libraryId===ex.id).slice(-6).reverse();
         if (!rows.length) return '';
-
-        const best = Math.max(...rows.map(r => Number(r.maxKg) || 0));
-
-        return `
-          <div class="progress-history-card">
-            <div class="progress-ex-title">${escapeHtml(ex.name)} · שיא: ${best} ק״ג</div>
-            ${rows.map(r => `
-              <div class="progress-line">
-                <span>${escapeHtml(r.date)}</span>
-                <span>מקס׳ ${r.maxKg} ק״ג · ממוצע ${r.avgKg} ק״ג</span>
-              </div>
-            `).join('')}
-          </div>
-        `;
+        const best = Math.max(...rows.map(r=>Number(r.maxKg)||0));
+        return `<div class="progress-history-card">
+          <div class="progress-ex-title">${escapeHtml(ex.name)} · שיא: ${best} ק״ג</div>
+          ${rows.map(r=>`<div class="progress-line"><span>${escapeHtml(r.date)}</span><span>מקס׳ ${r.maxKg} ק״ג · ממוצע ${r.avgKg} ק״ג</span></div>`).join('')}
+        </div>`;
       }).join('') || '<div class="empty">אין עדיין נתוני משקל</div>';
     }
 
     function renderGoals(){
       const el = document.getElementById('goalsList');
       if (!el) return;
-
       el.innerHTML = LIBRARY.map(ex => {
         const goal = Number(state.goals?.[ex.id]) || 0;
         const best = getExerciseBestKg(ex.id);
         const percent = goal ? Math.min(100, Math.round((best / goal) * 100)) : 0;
-
-        return `
-          <div class="goal-list-row">
-            <strong>${escapeHtml(ex.name)}</strong>
-
-            <div style="margin-top:6px;color:var(--muted);font-size:12px;">
-              ${goal ? `שיא ${best} ק״ג מתוך יעד ${goal} ק״ג · ${percent}%` : 'עדיין לא הוגדר יעד'}
-            </div>
-
-            <div class="goal-bar">
-              <div class="goal-fill" style="width:${percent}%"></div>
-            </div>
-
-            <div class="goal-actions">
-              <button class="secondary" onclick="setGoalForExercise('${ex.id}')">הגדר / עדכן יעד</button>
-              ${goal ? `<button class="danger" onclick="clearGoalForExercise('${ex.id}')">נקה</button>` : ''}
-            </div>
+        return `<div class="goal-list-row">
+          <strong>${escapeHtml(ex.name)}</strong>
+          <div style="margin-top:6px;color:var(--muted);font-size:12px;">${goal ? `שיא ${best} ק״ג מתוך יעד ${goal} ק״ג · ${percent}%` : 'עדיין לא הוגדר יעד'}</div>
+          <div class="goal-bar"><div class="goal-fill" style="width:${percent}%"></div></div>
+          <div class="goal-actions">
+            <button class="secondary" onclick="setGoalForExercise('${ex.id}')">הגדר / עדכן יעד</button>
+            ${goal ? `<button class="danger" onclick="clearGoalForExercise('${ex.id}')">נקה</button>` : ''}
           </div>
-        `;
+        </div>`;
       }).join('');
     }
 
@@ -1227,28 +1087,17 @@
       const ex = LIBRARY.find(item => item.id === libraryId);
       const current = state.goals?.[libraryId] || '';
       const value = prompt(`מה יעד המשקל ל${ex?.name || 'התרגיל'} בק״ג?`, current);
-
       if (value === null) return;
-
       const kg = numericKg(value);
-
-      if (!kg) {
-        alert('נא להזין יעד מספרי גדול מ-0');
-        return;
-      }
-
+      if (!kg) return alert('נא להזין יעד מספרי גדול מ-0');
       state.goals[libraryId] = kg;
-      save();
-      render();
+      save(); render();
     }
 
     function clearGoalForExercise(libraryId){
       if (!confirm('למחוק את היעד לתרגיל הזה?')) return;
-
       delete state.goals[libraryId];
-
-      save();
-      render();
+      save(); render();
     }
 
     function setGoalForActiveExercise(){
@@ -1257,130 +1106,90 @@
 
     function deleteHistoryItem(id){
       if (!confirm('למחוק את האימון מההיסטוריה?')) return;
-
-      state.history = state.history.filter(h => h.id !== id);
-      state.weightHistory = state.weightHistory.filter(w => w.sessionId !== id);
-
-      save();
-      render();
+      state.history = state.history.filter(h=>h.id!==id);
+      state.weightHistory = state.weightHistory.filter(w=>w.sessionId!==id);
+      save(); render();
     }
 
-    function updateSetField(exerciseId, setId, field, value){
-      const ex = selectedDay().exercises.find(e => e.instanceId === exerciseId);
-      const set = ex?.sets.find(s => s.id === setId);
-
+    function updateSetField(exerciseId,setId,field,value){
+      const ex = selectedDay().exercises.find(e=>e.instanceId===exerciseId);
+      const set = ex?.sets.find(s=>s.id===setId);
       if (!set) return;
 
       set[field] = value;
       saveCurrentSetToMemory(ex, set);
+
       save();
-      renderGoalForActiveExercise();
     }
 
-    function toggleSetDone(exerciseId, setId){
-      const ex = selectedDay().exercises.find(e => e.instanceId === exerciseId);
-      const set = ex?.sets.find(s => s.id === setId);
-
-      if (!set) return;
-
+    function toggleSetDone(exerciseId,setId){
+      const ex = selectedDay().exercises.find(e=>e.instanceId===exerciseId);
+      const set = ex?.sets.find(s=>s.id===setId); if (!set) return;
       set.done = !set.done;
-
       saveCurrentSetToMemory(ex, set);
 
-      ex.done = ex.sets.every(s => s.done);
-
+      ex.done = ex.sets.every(s=>s.done);
       if (set.done) startRestTimer(true);
-
-      if (ex.done && state.activeExerciseIndex < selectedDay().exercises.length - 1) {
-        state.activeExerciseIndex += 1;
-      }
-
+      if (ex.done && state.activeExerciseIndex < selectedDay().exercises.length - 1) state.activeExerciseIndex += 1;
       render();
     }
 
-    function setActiveExercise(i){
-      state.activeExerciseIndex = i;
-      render();
-    }
+    function setActiveExercise(i){ state.activeExerciseIndex = i; render(); }
 
     function resetWorkout(){
       if (!confirm('לאפס ולפתוח אימון גלוטס חדש?')) return;
-
       const plan = createWorkoutPlan(state.lastSets);
-
-      state.days = plan.days;
-      state.selectedDayId = plan.selectedDayId;
-      state.activeExerciseIndex = 0;
-
-      state.timers.workoutSeconds = 0;
-      state.timers.restSecondsLeft = 0;
-      state.timers.workoutRunning = false;
-      state.timers.restRunning = false;
-
-      clearInterval(workoutTimerInterval);
-      clearInterval(restTimerInterval);
-
-      workoutTimerInterval = null;
-      restTimerInterval = null;
-
-      document.body.classList.remove('focus-mode');
-
+      state.days = plan.days; state.selectedDayId = plan.selectedDayId; state.activeExerciseIndex = 0;
+      state.timers.workoutSeconds = 0; state.timers.restSecondsLeft = 0; state.timers.workoutRunning=false; state.timers.restRunning=false;
+      clearInterval(workoutTimerInterval); clearInterval(restTimerInterval); document.body.classList.remove('focus-mode');
       render();
     }
 
     function toggleWorkoutTimer(){
       if (state.timers.workoutRunning) {
         clearInterval(workoutTimerInterval);
-        workoutTimerInterval = null;
-        state.timers.workoutRunning = false;
+        workoutTimerInterval=null;
+        state.timers.workoutRunning=false;
         document.body.classList.remove('focus-mode');
       } else {
-        state.timers.workoutRunning = true;
+        state.timers.workoutRunning=true;
         document.body.classList.add('focus-mode');
-
-        workoutTimerInterval = setInterval(() => {
-          state.timers.workoutSeconds += 1;
+        workoutTimerInterval=setInterval(()=>{
+          state.timers.workoutSeconds+=1;
           renderTimers();
           save();
-        }, 1000);
+        },1000);
       }
-
       renderTimers();
       save();
     }
 
-    function startRestTimer(forceRestart = false){
+    function startRestTimer(forceRestart=false){
       if (forceRestart && restTimerInterval) {
         clearInterval(restTimerInterval);
-        restTimerInterval = null;
+        restTimerInterval=null;
       }
-
       if (state.timers.restRunning && !forceRestart) return;
-
-      if (forceRestart) state.timers.restSecondsLeft = 0;
-
-      state.timers.restRunning = true;
-
-      restTimerInterval = setInterval(() => {
-        state.timers.restSecondsLeft += 1;
+      if (forceRestart) state.timers.restSecondsLeft=0;
+      state.timers.restRunning=true;
+      restTimerInterval=setInterval(()=>{
+        state.timers.restSecondsLeft+=1;
         renderTimers();
         save();
-      }, 1000);
-
+      },1000);
       renderTimers();
       save();
     }
 
-    function toggleRestTimer(forceStop = false){
+    function toggleRestTimer(forceStop=false){
       if (state.timers.restRunning || forceStop) {
         clearInterval(restTimerInterval);
-        restTimerInterval = null;
-        state.timers.restRunning = false;
+        restTimerInterval=null;
+        state.timers.restRunning=false;
       } else {
         startRestTimer(true);
         return;
       }
-
       renderTimers();
       save();
     }
@@ -1389,23 +1198,22 @@
       const day = selectedDay();
       const calories = estimateStrengthCalories();
       const sessionId = uid();
-      const completedExercises = day.exercises.filter(ex => ex.done).length;
+      const completedExercises = day.exercises.filter(ex=>ex.done).length;
 
       state.history.push({
-        id: sessionId,
-        day: 'אימון גלוטס',
-        date: todayText(),
+        id:sessionId,
+        day:'אימון גלוטס',
+        date:todayText(),
         completedExercises,
-        duration: state.timers.workoutSeconds,
+        duration:state.timers.workoutSeconds,
         calories
       });
 
-      day.exercises.forEach(ex => {
-        const weights = ex.sets.map(s => numericKg(s.kg)).filter(n => n > 0);
+      day.exercises.forEach(ex=>{
+        const weights = ex.sets.map(s=>numericKg(s.kg)).filter(n=>n>0);
 
         if (!state.lastSets) state.lastSets = {};
         state.lastSets[ex.libraryId] = {};
-
         ex.sets.forEach(s => {
           state.lastSets[ex.libraryId][s.index - 1] = {
             reps: String(s.reps ?? ''),
@@ -1416,74 +1224,60 @@
         if (weights.length) {
           state.weightHistory.push({
             sessionId,
-            date: todayText(),
-            libraryId: ex.libraryId,
-            name: ex.name,
-            maxKg: Math.max(...weights),
-            avgKg: Math.round((weights.reduce((a,b) => a + b, 0) / weights.length) * 10) / 10
+            date:todayText(),
+            libraryId:ex.libraryId,
+            name:ex.name,
+            maxKg:Math.max(...weights),
+            avgKg:Math.round((weights.reduce((a,b)=>a+b,0)/weights.length)*10)/10
           });
         }
 
-        ex.done = false;
-        ex.sets.forEach(s => s.done = false);
+        ex.done=false;
+        ex.sets.forEach(s=>s.done=false);
       });
 
-      state.activeExerciseIndex = 0;
-      state.timers.workoutSeconds = 0;
-      state.timers.restSecondsLeft = 0;
+      state.activeExerciseIndex=0;
+      state.timers.workoutSeconds=0;
+      state.timers.restSecondsLeft=0;
 
       clearInterval(workoutTimerInterval);
-      workoutTimerInterval = null;
-      state.timers.workoutRunning = false;
+      workoutTimerInterval=null;
+      state.timers.workoutRunning=false;
 
       clearInterval(restTimerInterval);
-      restTimerInterval = null;
-      state.timers.restRunning = false;
+      restTimerInterval=null;
+      state.timers.restRunning=false;
 
       document.body.classList.remove('focus-mode');
 
-      const plan = createWorkoutPlan(state.lastSets);
-      state.days = plan.days;
-      state.selectedDayId = plan.selectedDayId;
+      const plan=createWorkoutPlan(state.lastSets);
+      state.days=plan.days;
+      state.selectedDayId=plan.selectedDayId;
 
       render();
-
       alert(`האימון נשמר • כ-${calories} קלוריות`);
     }
 
     function renderMusic(){
-      const input = document.getElementById('spotifyInput');
-      const iframe = document.getElementById('spotifyBar');
-
+      const input=document.getElementById('spotifyInput');
+      const iframe=document.getElementById('spotifyBar');
       if (input) input.value = state.spotifyUrl || '';
       if (iframe) iframe.src = spotifyEmbedUrl(state.spotifyUrl);
     }
 
     function spotifyEmbedUrl(url){
-      const fallback = 'https://open.spotify.com/embed/playlist/37i9dQZF1DX76Wlfdnj7AP?utm_source=generator&theme=0';
-
+      const fallback='https://open.spotify.com/embed/playlist/37i9dQZF1DX76Wlfdnj7AP?utm_source=generator&theme=0';
       if (!url) return fallback;
-
-      if (url.includes('open.spotify.com/embed/')) {
-        return url.includes('?') ? url : url + '?utm_source=generator&theme=0';
-      }
-
-      const m = url.match(/open\.spotify\.com\/(playlist|album|track)\/([A-Za-z0-9]+)/);
-
+      if (url.includes('open.spotify.com/embed/')) return url.includes('?') ? url : url + '?utm_source=generator&theme=0';
+      const m=url.match(/open\.spotify\.com\/(playlist|album|track)\/([A-Za-z0-9]+)/);
       if (!m) return fallback;
-
       return `https://open.spotify.com/embed/${m[1]}/${m[2]}?utm_source=generator&theme=0`;
     }
 
     function saveSpotify(){
-      const value = document.getElementById('spotifyInput').value.trim();
-
-      if (!value.includes('spotify.com')) {
-        alert('הדבק קישור Spotify תקין');
-        return;
-      }
-
-      state.spotifyUrl = value;
+      const value=document.getElementById('spotifyInput').value.trim();
+      if (!value.includes('spotify.com')) return alert('הדבק קישור Spotify תקין');
+      state.spotifyUrl=value;
       render();
     }
 
@@ -1505,24 +1299,27 @@
     }
 
     document.getElementById('resetWorkoutBtn').addEventListener('click', resetWorkout);
-    document.getElementById('finishWorkoutTopBtn').addEventListener('click', finishWorkout);
     document.getElementById('toggleWorkoutBtn').addEventListener('click', toggleWorkoutTimer);
-    document.getElementById('toggleRestBtn').addEventListener('click', () => toggleRestTimer());
-    document.getElementById('setGoalActiveBtn').addEventListener('click', setGoalForActiveExercise);
+    document.getElementById('toggleRestBtn').addEventListener('click', () => toggleRestTimer(false));
+    document.getElementById('finishWorkoutTopBtn').addEventListener('click', finishWorkout);
     document.getElementById('saveSpotifyBtn').addEventListener('click', saveSpotify);
-
-    document.getElementById('navWorkout').addEventListener('click', () => showSection('workout');
-    document.getElementById('navHistory').addEventListener('click', () => showSection('history');
-    document.getElementById('navProgress').addEventListener('click', () => showSection('progress');
+    document.getElementById('setGoalActiveBtn').addEventListener('click', setGoalForActiveExercise);
+    document.getElementById('navWorkout').addEventListener('click', () => showSection('workout'));
+    document.getElementById('navHistory').addEventListener('click', () => showSection('history'));
+    document.getElementById('navProgress').addEventListener('click', () => showSection('progress'));
     document.getElementById('navGoals').addEventListener('click', () => showSection('goals'));
     document.getElementById('navMusic').addEventListener('click', () => showSection('music'));
 
-    state.timers.workoutRunning = false;
-    state.timers.restRunning = false;
-    save();
+    window.setActiveExercise=setActiveExercise;
+    window.updateSetField=updateSetField;
+    window.toggleSetDone=toggleSetDone;
+    window.deleteHistoryItem=deleteHistoryItem;
+    window.setGoalForExercise=setGoalForExercise;
+    window.clearGoalForExercise=clearGoalForExercise;
+    window.resetWorkout=resetWorkout;
 
-    render();
     showSection('workout');
+    render();
   </script>
 </body>
 </html>
