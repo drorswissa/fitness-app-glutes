@@ -354,6 +354,9 @@
       padding: 14px 12px;
       font-weight: 700;
       cursor: pointer;
+      position: relative;
+      z-index: 10;
+      pointer-events: auto;
     }
 
     .footer-btn.done {
@@ -641,7 +644,7 @@
         <div class="progress-bar"><div id="progressFill"></div></div>
 
         <div class="timer-hero" id="timerHero">
-          <div class="timer-hero-label">זמן מנוחה</div>
+          <div class="timer-hero-label" id="bigTimerLabel">זמן עבודה</div>
           <div class="timer-hero-time" id="bigCenterTimer">00:00</div>
         </div>
 
@@ -1091,7 +1094,15 @@
       document.getElementById('restTimerDisplay').textContent = restTime;
 
       const bigTimer = document.getElementById('bigCenterTimer');
-      if (bigTimer) bigTimer.textContent = restTime;
+      const bigLabel = document.getElementById('bigTimerLabel');
+
+      if (state.timers.restRunning) {
+        if (bigLabel) bigLabel.textContent = 'זמן מנוחה';
+        if (bigTimer) bigTimer.textContent = restTime;
+      } else {
+        if (bigLabel) bigLabel.textContent = 'זמן עבודה';
+        if (bigTimer) bigTimer.textContent = workoutTime;
+      }
 
       document.getElementById('toggleWorkoutBtn').textContent =
         state.timers.workoutRunning ? 'עצור אימון' : 'התחל אימון';
@@ -1263,6 +1274,7 @@
       set[field] = value;
       saveCurrentSetToMemory(ex, set);
       save();
+      renderGoalForActiveExercise();
     }
 
     function toggleSetDone(exerciseId, setId){
@@ -1492,4 +1504,25 @@
         .replace(/'/g,'&#39;');
     }
 
-    document.getElementById('resetWorkoutBtn').add
+    document.getElementById('resetWorkoutBtn').addEventListener('click', resetWorkout);
+    document.getElementById('finishWorkoutTopBtn').addEventListener('click', finishWorkout);
+    document.getElementById('toggleWorkoutBtn').addEventListener('click', toggleWorkoutTimer);
+    document.getElementById('toggleRestBtn').addEventListener('click', () => toggleRestTimer());
+    document.getElementById('setGoalActiveBtn').addEventListener('click', setGoalForActiveExercise);
+    document.getElementById('saveSpotifyBtn').addEventListener('click', saveSpotify);
+
+    document.getElementById('navWorkout').addEventListener('click', () => showSection('workout');
+    document.getElementById('navHistory').addEventListener('click', () => showSection('history');
+    document.getElementById('navProgress').addEventListener('click', () => showSection('progress');
+    document.getElementById('navGoals').addEventListener('click', () => showSection('goals'));
+    document.getElementById('navMusic').addEventListener('click', () => showSection('music'));
+
+    state.timers.workoutRunning = false;
+    state.timers.restRunning = false;
+    save();
+
+    render();
+    showSection('workout');
+  </script>
+</body>
+</html>
